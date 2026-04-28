@@ -655,13 +655,12 @@ html { scroll-behavior: smooth; }
   color-scheme: dark;
   color: #e8e8f0;
 
-  /* Mini app preview accent — matches the real desktop app's Apple
-     System Blue Dark Mode (#0A84FF). The website preview shows exactly
-     what a user sees in the installed app: the canonical macOS accent
-     used by Finder, Mail, Safari, Calendar, etc. */
-  --accent:        #0A84FF;
-  --accent-dim:    rgba(10,132,255,0.18);
-  --accent-border: rgba(10,132,255,0.40);
+  /* Mini app preview accent — matches the real desktop app's Dark Teal
+     (#0F766E). Website preview reflects what users see when they install
+     the app: a premium, deep teal accent calibrated for dark UI. */
+  --accent:        #0F766E;
+  --accent-dim:    rgba(15,118,110,0.18);
+  --accent-border: rgba(15,118,110,0.42);
   --accent-fg:     #FFFFFF;
 
   --text-primary:     rgba(255,255,255,0.95);

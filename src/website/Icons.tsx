@@ -17,12 +17,11 @@ export const NookraMark: React.FC<{ size?: number; className?: string }> = ({ si
   <svg width={size} height={size} viewBox="0 0 28 28" fill="none" className={className} aria-hidden>
     <defs>
       <linearGradient id="nk-mark" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse">
-        {/* Apple System Blue gradient. Light end (#5AC8FA — Apple's
-            System Light Blue) into the System Blue accent — the same
-            move Finder uses on its sidebar selection. Reads as native
-            macOS chrome rather than a custom-branded logo. */}
-        <stop stopColor="#5AC8FA" />
-        <stop offset="1" stopColor="#0A84FF" />
+        {/* Dark teal gradient — light teal-400 (#2DD4BF) into the
+            accent's deep teal-700 (#0F766E). Subtle metallic sheen
+            against the dark bg, premium without shouting. */}
+        <stop stopColor="#2DD4BF" />
+        <stop offset="1" stopColor="#0F766E" />
       </linearGradient>
     </defs>
     <rect x="1" y="1" width="26" height="26" rx="8" fill="#0b0b0d" stroke="rgba(255,255,255,0.08)" />

@@ -96,19 +96,17 @@
 }
 
 /* ── Accent color system ─────────────────────────────────────────────────
-   Apple System Blue Dark Mode (#0A84FF) — the canonical macOS accent.
-   Used natively by Finder, Mail, Safari, Calendar, Reminders, Messages,
-   FaceTime, System Settings, Activity Monitor, Disk Utility, and the
-   App Store. The default tint Apple ships when you don't change a
-   thing. Picks up "feels native to macOS" without competing with the
-   red/green P&L semantics — blue lives in a different hue family from
-   both win-green and loss-red.
+   Dark Teal (#0F766E) — deep, premium teal calibrated for dark UI.
+   Distinct from both win-green (#34d399, brighter and more emerald)
+   and loss-red, so it pairs cleanly with P&L semantics without
+   visual confusion. Feels like a brushed-bronze trading desk
+   instrument; less corporate than blue, less austere than graphite.
    ─────────────────────────────────────────────────────────────────────── */
 :root {
-  --accent:        #0A84FF;
-  --accent-dim:    rgba(10,132,255,0.18);
-  --accent-border: rgba(10,132,255,0.40);
-  /* White foreground on System Blue — matches macOS button contrast. */
+  --accent:        #0F766E;
+  --accent-dim:    rgba(15,118,110,0.18);
+  --accent-border: rgba(15,118,110,0.42);
+  /* White foreground gives clean WCAG contrast against the mid-dark teal. */
   --accent-fg:     #FFFFFF;
 }
 
