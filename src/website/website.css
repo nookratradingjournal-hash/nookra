@@ -655,12 +655,13 @@ html { scroll-behavior: smooth; }
   color-scheme: dark;
   color: #e8e8f0;
 
-  /* Mini app preview accent — matches the real desktop app's Dark Teal
-     (#0F766E). Website preview reflects what users see when they install
-     the app: a premium, deep teal accent calibrated for dark UI. */
-  --accent:        #0F766E;
-  --accent-dim:    rgba(15,118,110,0.18);
-  --accent-border: rgba(15,118,110,0.42);
+  /* Mini app preview accent — matches the real desktop app's Mid Teal
+     (#0d9488 / Tailwind teal-600). One notch brighter than teal-700,
+     still well below bright highlighter teal. Website preview reflects
+     what users actually see in the installed app. */
+  --accent:        #0d9488;
+  --accent-dim:    rgba(13,148,136,0.18);
+  --accent-border: rgba(13,148,136,0.42);
   --accent-fg:     #FFFFFF;
 
   --text-primary:     rgba(255,255,255,0.95);

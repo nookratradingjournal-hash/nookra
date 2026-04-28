@@ -96,17 +96,16 @@
 }
 
 /* ── Accent color system ─────────────────────────────────────────────────
-   Dark Teal (#0F766E) — deep, premium teal calibrated for dark UI.
-   Distinct from both win-green (#34d399, brighter and more emerald)
-   and loss-red, so it pairs cleanly with P&L semantics without
-   visual confusion. Feels like a brushed-bronze trading desk
-   instrument; less corporate than blue, less austere than graphite.
+   Mid Teal (#0d9488 — Tailwind teal-600). One notch brighter than the
+   teal-700 we tried first (which read too dark on the dark UI), but
+   still well below the bright teal-500 we started with (which read as
+   highlighter-y). Distinct from both win-green and loss-red, so it
+   pairs cleanly with P&L semantics. The "instrument patina" feel.
    ─────────────────────────────────────────────────────────────────────── */
 :root {
-  --accent:        #0F766E;
-  --accent-dim:    rgba(15,118,110,0.18);
-  --accent-border: rgba(15,118,110,0.42);
-  /* White foreground gives clean WCAG contrast against the mid-dark teal. */
+  --accent:        #0d9488;
+  --accent-dim:    rgba(13,148,136,0.18);
+  --accent-border: rgba(13,148,136,0.42);
   --accent-fg:     #FFFFFF;
 }
 

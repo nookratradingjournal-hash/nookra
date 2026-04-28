@@ -17,11 +17,11 @@ export const NookraMark: React.FC<{ size?: number; className?: string }> = ({ si
   <svg width={size} height={size} viewBox="0 0 28 28" fill="none" className={className} aria-hidden>
     <defs>
       <linearGradient id="nk-mark" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse">
-        {/* Dark teal gradient — light teal-400 (#2DD4BF) into the
-            accent's deep teal-700 (#0F766E). Subtle metallic sheen
-            against the dark bg, premium without shouting. */}
-        <stop stopColor="#2DD4BF" />
-        <stop offset="1" stopColor="#0F766E" />
+        {/* Mid-teal gradient — teal-300 (#5EEAD4) into the accent's
+            teal-600 (#0d9488). Light end gives the mark a metallic
+            sheen against the dark bg without going neon. */}
+        <stop stopColor="#5EEAD4" />
+        <stop offset="1" stopColor="#0d9488" />
       </linearGradient>
     </defs>
     <rect x="1" y="1" width="26" height="26" rx="8" fill="#0b0b0d" stroke="rgba(255,255,255,0.08)" />
