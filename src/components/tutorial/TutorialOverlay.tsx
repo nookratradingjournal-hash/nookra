@@ -346,10 +346,19 @@ export function TutorialOverlay({
     return () => clearTimeout(t)
   }, [step.target, onNext])
 
-  // Measure the tooltip after each text change so placement has real height.
-  useEffect(() => {
+  // Measure the tooltip BEFORE paint so placement uses the real height of
+  // this step's content, not the previous step's. Using `useEffect` left a
+  // one-frame window where the clamp's upper bound (`viewport.h -
+  // tooltipH - EDGE_PAD`) was computed from a stale height — if the
+  // previous step's tooltip was taller, the new (shorter) content
+  // committed to a lower tipY than was safe, and on tall actual content
+  // the box ran off the bottom of the viewport. `useLayoutEffect` fires
+  // synchronously after render but before paint, so the height is updated
+  // before the browser draws the first frame of the new step.
+  useLayoutEffect(() => {
     if (tooltipRef.current) {
-      setTooltipH(tooltipRef.current.getBoundingClientRect().height)
+      const h = tooltipRef.current.getBoundingClientRect().height
+      if (h > 0) setTooltipH(h)
     }
   }, [step.id])
 

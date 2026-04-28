@@ -100,7 +100,13 @@ export const MAIN_TUTORIAL_STEPS: TutorialStep[] = [
     tooltipWidth: 340,
     onEnter: [
       { type: 'openWidgetMenu' },
-      { type: 'wait', ms: 260 },
+      // Bumped from 260 → 360. The drawer's slide-in transition is 300ms
+      // (`duration-300` on the panel). 260 left a 40ms window where the
+      // overlay's polling loop sampled the drawer mid-animation, so the
+      // spotlight + tooltip occasionally landed on the in-flight rect
+      // (drawer still partly off-screen to the right) before settling.
+      // 360 gives the slide a full 60ms to settle before measurement.
+      { type: 'wait', ms: 360 },
     ],
   },
   {
