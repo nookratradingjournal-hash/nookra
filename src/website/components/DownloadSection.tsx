@@ -8,11 +8,11 @@ import { AppleIcon, WindowsIcon, ArrowRightIcon } from '../Icons'
 // The DMG (114 MB) is too large to bundle into the marketing site, so it
 // lives on GitHub Releases — free, supports files up to 2 GB, gives you a
 // download counter for free. After publishing the v1.0.0 release on GitHub,
-// replace `wesley379` and `<your-repo>` below with the actual
+// replace `nookratradingjournal-hash` and `<your-repo>` below with the actual
 // values. The URL pattern is:
 //   https://github.com/<owner>/<repo>/releases/download/<tag>/<asset>
 const MAC_URL: string =
-  'https://github.com/wesley379/nookra/releases/download/v1.0.0/Nookra.dmg'
+  'https://github.com/nookratradingjournal-hash/nookra/releases/download/v1.0.0/Nookra.dmg'
 
 // Windows is in private beta; setting WINDOWS_URL to a non-null string when
 // the Windows installer ships will activate the Windows download card
