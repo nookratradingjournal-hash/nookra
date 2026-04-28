@@ -96,18 +96,19 @@
 }
 
 /* ── Accent color system ─────────────────────────────────────────────────
-   Apple Graphite (#8E8E93) — the System Gray accent macOS ships in
-   System Settings → Appearance for users who want "no color". Used by
-   Apple Stocks, Calculator, parts of Activity Monitor. Picks up the
-   "feels native to macOS" cue without competing with the red/green P&L
-   semantics — the data is the only color signal on screen.
+   Apple System Blue Dark Mode (#0A84FF) — the canonical macOS accent.
+   Used natively by Finder, Mail, Safari, Calendar, Reminders, Messages,
+   FaceTime, System Settings, Activity Monitor, Disk Utility, and the
+   App Store. The default tint Apple ships when you don't change a
+   thing. Picks up "feels native to macOS" without competing with the
+   red/green P&L semantics — blue lives in a different hue family from
+   both win-green and loss-red.
    ─────────────────────────────────────────────────────────────────────── */
 :root {
-  --accent:        #8E8E93;
-  --accent-dim:    rgba(142,142,147,0.18);
-  --accent-border: rgba(142,142,147,0.42);
-  /* White foreground on graphite — matches macOS's own sidebar-selection
-     and graphite-button text contrast. */
+  --accent:        #0A84FF;
+  --accent-dim:    rgba(10,132,255,0.18);
+  --accent-border: rgba(10,132,255,0.40);
+  /* White foreground on System Blue — matches macOS button contrast. */
   --accent-fg:     #FFFFFF;
 }
 
