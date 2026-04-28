@@ -7,7 +7,8 @@ dist/
 dist-admin/
 out/
 # Marketing site build (Vite writes here; Cloudflare Pages regenerates on deploy)
-website/
+# Anchor to root with leading `/` so this doesn't accidentally match src/website/
+/website/
 # TS incremental build cache
 *.tsbuildinfo
 
