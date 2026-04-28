@@ -1,0 +1,643 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    /* Pre-app baseline — activation, onboarding, tutorial, settings, and
+       any other system UI renders against this 18px root. The in-app
+       FontSizeController (mounted only inside the main journal) overrides
+       this with the user's preference while the journal is active, then
+       clears the inline style on unmount so system UI snaps back to 18px. */
+    font-size: 18px;
+  }
+
+  body {
+    background: #09090b;
+    color: #e8e8f0;
+    margin: 0;
+  }
+
+  ::selection { background: rgba(255,255,255,0.15); }
+
+  ::-webkit-scrollbar { width: 3px; height: 3px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+}
+
+@layer components {
+  .input-field {
+    @apply w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 py-2.5
+           text-sm text-white placeholder-white/20
+           focus:outline-none focus:bg-white/[0.06]
+           transition-all duration-150;
+    border-color: rgba(255,255,255,0.08);
+  }
+  .input-field:hover {
+    border-color: rgba(255,255,255,0.14);
+  }
+  .input-field:focus {
+    border-color: var(--accent-border);
+  }
+
+  .label-text {
+    @apply text-[10px] font-semibold text-white/30 uppercase tracking-[0.08em];
+  }
+}
+
+/* ── Reusable interactive hover system ────────────────────────────────────── */
+.float-hover {
+  cursor: pointer;
+  transition: transform 150ms ease-out, opacity 150ms ease-out,
+              background-color 150ms ease-out, border-color 150ms ease-out,
+              color 150ms ease-out, box-shadow 150ms ease-out;
+}
+.float-hover:hover:not([disabled]):not(:disabled) {
+  transform: translateY(-2px);
+}
+.float-hover:active:not([disabled]):not(:disabled) {
+  transform: translateY(0) scale(0.97);
+}
+
+.btn-press {
+  cursor: pointer;
+  transition: transform 150ms ease-out, opacity 150ms ease-out,
+              background-color 150ms ease-out, border-color 150ms ease-out,
+              color 150ms ease-out, box-shadow 150ms ease-out;
+}
+.btn-press:active:not([disabled]):not(:disabled) {
+  transform: scale(0.96);
+}
+
+.close-hover {
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 150ms ease-out, color 150ms ease-out,
+              background-color 150ms ease-out, border-color 150ms ease-out;
+}
+.close-hover:hover {
+  color: rgb(248, 113, 113);
+  background-color: rgba(239,68,68,0.06);
+  border-color: rgba(239,68,68,0.28);
+}
+.close-hover:active {
+  transform: scale(0.88);
+  color: rgb(239, 68, 68);
+}
+
+/* ── Accent color system ─────────────────────────────────────────────────
+   Single global teal. Used for primary CTAs, selected states, active tabs,
+   focus rings, progress indicators, non-P&L highlights. Semantic P&L colors
+   (emerald profit, red loss) live elsewhere and are intentionally distinct.
+   ─────────────────────────────────────────────────────────────────────── */
+:root {
+  --accent:        #14b8a6;
+  --accent-dim:    rgba(20,184,166,0.14);
+  --accent-border: rgba(20,184,166,0.34);
+  --accent-fg:     #ffffff;
+}
+
+/* ── Journal structural elements ─────────────────────────────────────────── */
+.journal-root {
+  background: #09090b;
+  color: #e8e8f0;
+  min-height: 100vh;
+}
+
+.app-header {
+  background: rgba(9,9,11,0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.modal-panel {
+  background: #111113;
+  border-color: rgba(255,255,255,0.07);
+}
+
+/* ── Density / layout classes ────────────────────────────────────────────── */
+.cal-cell       { height: 88px; }
+.cal-cell-empty { height: 88px; }
+.trade-row { padding-top: 1rem; padding-bottom: 1rem; }
+
+[data-density="compact"] .cal-cell       { height: 72px; }
+[data-density="compact"] .cal-cell-empty { height: 72px; }
+[data-density="compact"] .trade-row { padding-top: 0.625rem; padding-bottom: 0.625rem; }
+
+/* ── Font size: px-based arbitrary class overrides ───────────────────────── */
+[data-font-size="small"] .journal-root .text-\[9px\]  { font-size: 8px !important; }
+[data-font-size="small"] .journal-root .text-\[10px\] { font-size: 9px !important; }
+[data-font-size="small"] .journal-root .text-\[11px\] { font-size: 10px !important; }
+[data-font-size="small"] .journal-root .text-\[13px\] { font-size: 11px !important; }
+
+[data-font-size="large"] .journal-root .text-\[9px\]  { font-size: 10px !important; }
+[data-font-size="large"] .journal-root .text-\[10px\] { font-size: 11px !important; }
+[data-font-size="large"] .journal-root .text-\[11px\] { font-size: 13px !important; }
+[data-font-size="large"] .journal-root .text-\[13px\] { font-size: 15px !important; }
+
+/* ── Corner radius overrides ─────────────────────────────────────────────── */
+[data-radius="subtle"] .journal-root .rounded-lg  { border-radius: 4px !important; }
+[data-radius="subtle"] .journal-root .rounded-xl  { border-radius: 6px !important; }
+[data-radius="subtle"] .journal-root .rounded-2xl { border-radius: 8px !important; }
+[data-radius="subtle"] .modal-panel  { border-radius: 8px !important; }
+
+[data-radius="soft"] .journal-root .rounded-lg  { border-radius: 12px !important; }
+[data-radius="soft"] .journal-root .rounded-xl  { border-radius: 18px !important; }
+[data-radius="soft"] .journal-root .rounded-2xl { border-radius: 24px !important; }
+[data-radius="soft"] .modal-panel  { border-radius: 24px !important; }
+
+/* ── High contrast (always active) ──────────────────────────────────────── */
+.journal-root .text-white\/40 { color: rgba(255,255,255,0.58) !important; }
+.journal-root .text-white\/30 { color: rgba(255,255,255,0.48) !important; }
+.journal-root .text-white\/25 { color: rgba(255,255,255,0.42) !important; }
+.journal-root .text-white\/20 { color: rgba(255,255,255,0.34) !important; }
+.journal-root .text-white\/15 { color: rgba(255,255,255,0.26) !important; }
+.journal-root .border-white\/\[0\.06\] { border-color: rgba(255,255,255,0.09) !important; }
+.journal-root .border-white\/\[0\.07\] { border-color: rgba(255,255,255,0.10) !important; }
+.journal-root .border-white\/\[0\.08\] { border-color: rgba(255,255,255,0.11) !important; }
+
+/* ── Edit mode wobble ────────────────────────────────────────────────────── */
+@keyframes widget-wobble {
+  0%   { transform: rotate(0deg); }
+  20%  { transform: rotate(-0.8deg); }
+  40%  { transform: rotate(0.8deg); }
+  60%  { transform: rotate(-0.6deg); }
+  80%  { transform: rotate(0.6deg); }
+  100% { transform: rotate(0deg); }
+}
+.widget-wobble {
+  animation: widget-wobble 0.55s ease-in-out infinite;
+}
+.widget-wobble:nth-child(2n)   { animation-delay: -0.18s; }
+.widget-wobble:nth-child(3n)   { animation-delay: -0.34s; }
+.widget-wobble:nth-child(4n)   { animation-delay: -0.09s; }
+.widget-wobble:active { animation: none; }
+.widget-wobble[draggable]:active { animation: none; }
+
+/* ── Placed widgets (dark mode) — glassy lift ── */
+.placed-widget {
+  background: rgba(255,255,255,0.060);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow:
+    0 2px 22px rgba(0,0,0,0.26),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.placed-widget:hover {
+  filter: brightness(1.05);
+  box-shadow:
+    0 3px 26px rgba(0,0,0,0.30),
+    inset 0 1px 0 rgba(255,255,255,0.10);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   COMPAT SHIMS — semantic-token classes still referenced by current logic
+   components (tutorial, ActivationGate, UpdateModal, AdminPanel, widgets).
+   These map the token utilities onto the reference palette so JSX that uses
+   them renders with the original visual language.
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* Text hierarchy */
+.text-primary     { color: rgba(255,255,255,0.95); }
+.text-secondary   { color: rgba(255,255,255,0.60); }
+.text-tertiary    { color: rgba(255,255,255,0.40); }
+.text-quaternary  { color: rgba(255,255,255,0.25); }
+.text-ghost       { color: rgba(255,255,255,0.15); }
+
+/* Semantic pnl / status colors (emerald-400 / red-400 / amber) */
+.text-positive     { color: #34d399; }
+.text-negative     { color: #f87171; }
+.text-warning      { color: #fbbf24; }
+
+.bg-positive-soft      { background-color: rgba(16,185,129,0.12); }
+.bg-negative-soft      { background-color: rgba(239,68,68,0.12); }
+.bg-negative-soft-dim  { background-color: rgba(239,68,68,0.06); }
+.bg-negative-strong    { background-color: rgba(239,68,68,0.22); }
+.bg-warning-soft       { background-color: rgba(251,191,36,0.12); }
+
+.border-positive { border-color: rgba(16,185,129,0.30); }
+.border-negative { border-color: rgba(239,68,68,0.30); }
+.border-warning  { border-color: rgba(251,191,36,0.30); }
+
+/* Surface tokens */
+.bg-surface-resting  { background-color: rgba(255,255,255,0.02); }
+.bg-surface-hover    { background-color: rgba(255,255,255,0.04); }
+.bg-surface-active   { background-color: rgba(255,255,255,0.06); }
+
+/* Edge tokens */
+.border-edge-resting { border-color: rgba(255,255,255,0.08); }
+.border-edge-strong  { border-color: rgba(255,255,255,0.14); }
+
+/* Glass panels — used by logic-panel surfaces (AdminPanel, tooltips, etc.) */
+.glass-panel {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+}
+.glass-panel-elevated {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+}
+.glass-panel-floating {
+  background: #111113;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+}
+
+/* CSS variables still read by WidgetContent/helper functions */
+:root {
+  --text-primary:     rgba(255,255,255,0.95);
+  --text-secondary:   rgba(255,255,255,0.60);
+  --text-tertiary:    rgba(255,255,255,0.40);
+  --text-quaternary:  rgba(255,255,255,0.25);
+  --text-ghost:       rgba(255,255,255,0.15);
+  --color-positive:          #34d399;
+  --color-positive-bright:   #86efac;
+  --color-positive-soft:     rgba(16,185,129,0.12);
+  --color-positive-strong:   rgba(16,185,129,0.22);
+  --color-positive-fill:     rgba(16,185,129,0.42);
+  --color-positive-emphasis: rgba(16,185,129,0.85);
+  --color-negative:          #f87171;
+  --color-negative-soft:     rgba(239,68,68,0.12);
+  --color-negative-strong:   rgba(239,68,68,0.22);
+  --color-negative-fill:     rgba(239,68,68,0.38);
+  --color-negative-emphasis: rgba(239,68,68,0.85);
+  --color-negative-muted:    rgba(239,68,68,0.34);
+  --color-warning:           #fbbf24;
+  --color-warning-strong:    #fb923c;
+  --color-warning-fill:      rgba(251,191,36,0.55);
+  --color-neutral-pnl:       rgba(255,255,255,0.35);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   ACTIVATION / LICENSE FLOW — compat styles for ActivationGate's custom
+   classes. Kept flat and restrained to match the reference journal's raw-
+   Tailwind aesthetic (hairline borders, rgba(255,255,255,0.02–0.08) surfaces,
+   rounded-lg/xl, text-white/60/30 hierarchy — no premium gradients or
+   soft-radius panels).
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* Shell — activation window background. Flat, no blur, no special material. */
+.alcove-environment {
+  background: #09090b;
+  pointer-events: none;
+}
+.alcove-shell {
+  background: #111113;
+  color: #e8e8f0;
+}
+.alcove-shell--elevated {
+  background: #141418;
+}
+
+/* License key input + right-side action button. Mirrors .input-field sizing
+   but reserves 40px on the right for the embedded action button. */
+.activation-input {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 10px 44px 10px 36px;
+  font-size: 14px;
+  color: #fff;
+  outline: none;
+  transition: background-color 150ms ease-out, border-color 150ms ease-out, color 150ms ease-out;
+}
+.activation-input::placeholder { color: rgba(255,255,255,0.20); }
+.activation-input:hover:not(:disabled) { border-color: rgba(255,255,255,0.14); }
+.activation-input:focus { background: rgba(255,255,255,0.06); border-color: var(--accent-border); }
+.activation-input--locked {
+  background: rgba(255,255,255,0.02);
+  border-color: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.55);
+}
+
+.activation-input-action {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: rgba(255,255,255,0.40);
+  cursor: pointer;
+  transition: color 150ms ease-out, background-color 150ms ease-out, transform 150ms ease-out;
+}
+.activation-input-action:hover:not(:disabled) {
+  color: #fff;
+  background: rgba(255,255,255,0.06);
+}
+.activation-input-action:active:not(:disabled) { transform: translateY(-50%) scale(0.94); }
+.activation-input-action:disabled { opacity: 0.4; cursor: not-allowed; }
+.activation-input-action--success,
+.activation-input-action--success:hover:not(:disabled) {
+  color: #34d399;
+  background: rgba(16,185,129,0.10);
+}
+
+/* Recover-license link button. Minimal text button, no border. */
+.activation-recover-link {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.40);
+  font-size: 12px;
+  line-height: 1.4;
+  cursor: pointer;
+  padding: 0;
+  transition: color 150ms ease-out;
+}
+.activation-recover-link:hover { color: rgba(255,255,255,0.75); }
+
+/* Tab card (Trial / License / Purchase picker) — exact Alcove-ref match.
+   Inactive cards sit near-invisible against the panel (0.02 fill,
+   0.03 hairline border). Active card is slightly brighter AND wrapped
+   in a crisp per-tab accent outline (1px @ 0.80) + a soft 1px outer
+   halo (@ 0.22) that together form a clean ~2px colored edge — the
+   "selected" emphasis from the reference, no glow. */
+.tab-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 8px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.03);
+  border-radius: 12px;
+  cursor: pointer;
+  transition:
+    background-color 150ms ease-out,
+    border-color 150ms ease-out,
+    box-shadow 150ms ease-out,
+    transform 150ms ease-out;
+}
+.tab-card:hover:not(.tab-card--active) {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.08);
+}
+.tab-card:active { transform: scale(0.98); }
+.tab-card--active {
+  background: rgba(255,255,255,0.08);
+}
+
+/* Active per-tab accent outline + visible 1px outer ring.
+   Border carries the crisp inner edge (0.85 alpha). The box-shadow
+   adds a second 1px ring outside the border at 0.35 alpha — high
+   enough to actually register visually, matching the reference's
+   clean ~2px double-edge look. No blur, no spread, no glow. */
+.tab-card--active[data-tab="license"] {
+  border-color: rgba(20,184,166,0.85);
+  box-shadow: 0 0 0 1px rgba(20,184,166,0.35);
+}
+.tab-card--active[data-tab="trial"] {
+  border-color: rgba(249,168,37,0.85);
+  box-shadow: 0 0 0 1px rgba(249,168,37,0.35);
+}
+.tab-card--active[data-tab="purchase"] {
+  border-color: rgba(244,114,182,0.85);
+  box-shadow: 0 0 0 1px rgba(244,114,182,0.35);
+}
+
+/* Tab chip — per-tab Alcove-style tinted tile.
+   30×30 rounded-lg square with a saturated-but-soft per-tab tint
+   (~0.32) behind a pure white icon. Slightly stronger on hover and
+   again on active. */
+.tab-chip {
+  width: 30px; height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  background: rgba(255,255,255,0.08);
+  color: #ffffff;
+  transition: background-color 150ms ease-out;
+}
+
+/* License — teal accent tint */
+.tab-card[data-tab="license"] .tab-chip {
+  background: rgba(20,184,166,0.55);
+}
+.tab-card[data-tab="license"]:hover:not(.tab-card--active) .tab-chip {
+  background: rgba(20,184,166,0.62);
+}
+.tab-card--active[data-tab="license"] .tab-chip {
+  background: rgba(20,184,166,0.68);
+}
+
+/* Trial — soft warm amber tint */
+.tab-card[data-tab="trial"] .tab-chip {
+  background: rgba(249,168,37,0.55);
+}
+.tab-card[data-tab="trial"]:hover:not(.tab-card--active) .tab-chip {
+  background: rgba(249,168,37,0.62);
+}
+.tab-card--active[data-tab="trial"] .tab-chip {
+  background: rgba(249,168,37,0.68);
+}
+
+/* Purchase — soft pink tint */
+.tab-card[data-tab="purchase"] .tab-chip {
+  background: rgba(244,114,182,0.55);
+}
+.tab-card[data-tab="purchase"]:hover:not(.tab-card--active) .tab-chip {
+  background: rgba(244,114,182,0.62);
+}
+.tab-card--active[data-tab="purchase"] .tab-chip {
+  background: rgba(244,114,182,0.68);
+}
+
+.tab-card__label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: rgba(255,255,255,0.50);
+  transition: color 150ms ease-out;
+}
+.tab-card:hover:not(.tab-card--active) .tab-card__label {
+  color: rgba(255,255,255,0.75);
+}
+.tab-card--active .tab-card__label { color: #ffffff; }
+
+/* Icon tones — kept minimal so they match plain text-white/XX scale */
+.icon-quaternary { color: rgba(255,255,255,0.25); }
+.icon-tertiary   { color: rgba(255,255,255,0.40); }
+.icon-accent     { color: var(--accent); }
+
+/* Caption text — 11px, muted, used next to icons on activation screens */
+.text-caption {
+  font-size: 11px;
+  line-height: 16px;
+  color: rgba(255,255,255,0.45);
+}
+
+/* Overline — tiny uppercase label (loading spinner, etc.) */
+.text-overline {
+  font-size: 10px;
+  line-height: 14px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.30);
+}
+
+/* ── Tutorial overlay ─────────────────────────────────────────────────────
+   Minimal CSS required by TutorialOverlay.tsx. Just enough to:
+     • put the overlay above the app (fixed, full viewport, high z-index)
+     • let the SVG backdrop cover the viewport
+     • render the tooltip as a positioned card (x/y via framer transform)
+     • allow the tooltip + its buttons to receive clicks while leaving the
+       rest of the screen pass-through
+   Visual language mirrors `.modal-panel` (dark surface, hairline border)
+   and the existing accent tokens (`--accent`, `--accent-fg`) so the
+   tooltip feels part of the same system — no new colors introduced. */
+
+.tutorial-root {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  /* Root absorbs every pointer event during the tour — nothing beneath the
+     overlay is clickable. The tooltip re-enables hits on itself via its own
+     pointer-events:auto, so Skip / Back / Next still work. The SVG backdrop
+     stays pointer-events:none so its pixels fall through to this root,
+     which swallows them. Programmatic actions the tutorial runs (opening
+     the modal, typewriter fills, etc.) don't go through hit-testing and
+     are unaffected. */
+  pointer-events: auto;
+  /* Belt-and-braces: block the user's caret too, so a click-and-drag on
+     dim space doesn't produce a text selection flash. */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.tutorial-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.tutorial-tooltip {
+  /* Framer animates `x`/`y`; the base element uses fixed positioning so the
+     transform lands in viewport coordinates. `left`/`top` are set inline to
+     0 in the TSX — the transform carries the real x/y. */
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  pointer-events: auto;
+
+  background: #111113;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+  padding: 14px 16px 12px;
+  color: #ffffff;
+  font-family: inherit;
+}
+
+.tutorial-tooltip__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.tutorial-tooltip__progress {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.45);
+}
+.tutorial-tooltip__skip {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 2px 6px;
+  margin: 0;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.45);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: color 150ms ease-out, background-color 150ms ease-out;
+}
+.tutorial-tooltip__skip:hover {
+  color: rgba(255,255,255,0.80);
+  background: rgba(255,255,255,0.04);
+}
+
+.tutorial-tooltip__body {
+  margin-bottom: 14px;
+}
+.tutorial-tooltip__title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+}
+.tutorial-tooltip__desc {
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.65);
+  margin: 0;
+}
+
+.tutorial-tooltip__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.tutorial-tooltip__btn {
+  appearance: none;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    background-color 150ms ease-out,
+    border-color 150ms ease-out,
+    color 150ms ease-out,
+    opacity 150ms ease-out;
+}
+.tutorial-tooltip__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.tutorial-tooltip__btn--ghost {
+  background: transparent;
+  border-color: rgba(255,255,255,0.10);
+  color: rgba(255,255,255,0.70);
+}
+.tutorial-tooltip__btn--ghost:hover:not(:disabled) {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.16);
+  color: #ffffff;
+}
+.tutorial-tooltip__btn--primary {
+  background: var(--accent);
+  border-color: var(--accent-border);
+  color: var(--accent-fg);
+}
+.tutorial-tooltip__btn--primary:hover:not(:disabled) {
+  filter: brightness(1.08);
+}

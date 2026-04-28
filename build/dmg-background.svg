@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <!-- Same base gradient as the icon — continuity -->
+    <linearGradient id="bg" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0%"   stop-color="#1a1a1f"/>
+      <stop offset="55%"  stop-color="#111114"/>
+      <stop offset="100%" stop-color="#08080a"/>
+    </linearGradient>
+
+    <!-- Soft oversized diagonal — echoes the icon's carved slot across the canvas -->
+    <linearGradient id="diag" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#2a2a32" stop-opacity="0.0"/>
+      <stop offset="20%"  stop-color="#2a2a32" stop-opacity="0.15"/>
+      <stop offset="50%"  stop-color="#3a3a42" stop-opacity="0.28"/>
+      <stop offset="80%"  stop-color="#2a2a32" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#2a2a32" stop-opacity="0.0"/>
+    </linearGradient>
+
+    <!-- Soft light pool at top — matches icon's top-light treatment -->
+    <radialGradient id="topLight" cx="0.5" cy="0" r="0.7">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Edge vignette — deepens corners, focuses attention on center -->
+    <radialGradient id="vig" cx="0.5" cy="0.5" r="0.7">
+      <stop offset="0%"   stop-color="#000000" stop-opacity="0"/>
+      <stop offset="70%"  stop-color="#000000" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.55"/>
+    </radialGradient>
+
+    <!-- Blur filter to soften the diagonal into a brush mark -->
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="24"/>
+    </filter>
+  </defs>
+
+  <!-- BASE -->
+  <rect x="0" y="0" width="1200" height="800" fill="url(#bg)"/>
+
+  <!-- TOP LIGHT POOL -->
+  <rect x="0" y="0" width="1200" height="800" fill="url(#topLight)"/>
+
+  <!-- DIAGONAL ECHO of the icon's cut — soft, centered, non-competing -->
+  <!--
+    The diagonal's angle matches the icon's slot: from upper-left region to lower-right region.
+    Rendered at ~65° from horizontal, heavily blurred. Peaks at ~28% opacity.
+  -->
+  <g filter="url(#soften)" transform="translate(600,400) rotate(66) translate(-120,-520)">
+    <rect x="0" y="0" width="240" height="1040" fill="url(#diag)"/>
+  </g>
+
+  <!-- A second, fainter diagonal whisper for depth -->
+  <g filter="url(#soften)" transform="translate(600,400) rotate(66) translate(-60,-520)" opacity="0.6">
+    <rect x="0" y="0" width="120" height="1040" fill="url(#diag)"/>
+  </g>
+
+  <!-- VIGNETTE — deepen corners -->
+  <rect x="0" y="0" width="1200" height="800" fill="url(#vig)"/>
+
+  <!-- Outer hairline border — premium touch, barely perceptible -->
+  <rect x="1" y="1" width="1198" height="798" fill="none" stroke="#ffffff" stroke-opacity="0.035" stroke-width="2"/>
+</svg>

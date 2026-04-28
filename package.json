@@ -1,0 +1,41 @@
+{
+  "name": "nookra",
+  "productName": "Nookra",
+  "private": true,
+  "version": "1.0.0",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:admin": "vite --config vite.config.admin.ts",
+    "dev:website": "vite --config vite.config.website.ts",
+    "build": "tsc && vite build",
+    "build:admin": "tsc && vite build --config vite.config.admin.ts",
+    "build:website": "vite build --config vite.config.website.ts",
+    "start": "electron .",
+    "start:admin": "electron main-admin.js",
+    "dist": "npm run build && electron-builder --config electron-builder.json",
+    "dist:admin": "npm run build:admin && electron-builder --config electron-builder-admin.json"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.103.0",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.38.0",
+    "lucide-react": "^1.8.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.19",
+    "electron": "^41.0.0",
+    "electron-builder": "^26.8.1",
+    "postcss": "^8.4.40",
+    "tailwindcss": "^3.4.7",
+    "typescript": "^5.5.3",
+    "vite": "^5.3.5"
+  }
+}

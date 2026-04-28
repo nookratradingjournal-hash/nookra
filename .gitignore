@@ -1,0 +1,45 @@
+# ── dependencies ──
+node_modules/
+
+# ── build output ──
+# Electron app build (electron-builder writes here)
+dist/
+dist-admin/
+out/
+# Marketing site build (Vite writes here; Cloudflare Pages regenerates on deploy)
+website/
+# TS incremental build cache
+*.tsbuildinfo
+
+# ── secrets & local config ──
+.env
+.env.local
+.env.*.local
+*.local
+
+# ── platform / editor cruft ──
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── tools ──
+.playwright-mcp/
+.claude/
+
+# ── installer binaries (live on GitHub Releases, not in the repo) ──
+*.dmg
+*.exe
+*.msi
+*.zip
+*.tar.gz
+
+# ── logs ──
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# ── design reference screenshots (third-party site captures, not ours) ──
+alcove-*.png
