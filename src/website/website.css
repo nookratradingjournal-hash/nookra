@@ -1,0 +1,827 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ──────────────────────────────────────────────────────────────────────────
+   NOOKRA MARKETING SITE — design tokens scoped to the landing page bundle.
+   Intentionally kept separate from the app's index.css so app behavior is
+   untouched. Mirrors the app's accent + glass language but with larger
+   typography and more dramatic background gradients suitable for a hero.
+   ────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Carbon Ice palette — website-only swap. The real Electron app keeps its
+     original tokens via src/index.css; these variables only affect the
+     marketing site bundle. */
+  --nk-bg:         #020304;   /* Background */
+  --nk-bg-alt:     #07090B;   /* Soft background */
+  --nk-panel:      #0E1114;   /* Panel */
+  --nk-modal:      #171B20;   /* Elevated panel */
+  --nk-floating:   #20262D;   /* Floating panel */
+  --nk-surface-1:  rgba(255,255,255,0.02);
+  --nk-surface-2:  rgba(255,255,255,0.04);
+  --nk-surface-3:  rgba(255,255,255,0.06);
+
+  --nk-border:           #2B333B;
+  --nk-border-strong:    rgba(255,255,255,0.16);
+  --nk-border-accent:    rgba(175,194,212,0.34);
+
+  --nk-text-primary:     #F2F7FA;
+  --nk-text-secondary:   #9FAAB3;
+  --nk-text-tertiary:    #5F6972;
+  --nk-text-quaternary:  rgba(255,255,255,0.28);
+  --nk-text-accent:      #D6E6F4;
+
+  --nk-accent:           #AFC2D4;   /* Brand accent */
+  --nk-accent-bright:    #D6E6F4;   /* Accent hover */
+  --nk-accent-pressed:   #6F8498;   /* Accent pressed */
+  --nk-accent-dim:       rgba(175,194,212,0.10);
+
+  /* Trading semantic colors — kept distinct from brand accent */
+  --nk-positive:         #30D158;
+  --nk-negative:         #FF453A;
+  --nk-warning:          #FFD60A;
+
+  --nk-ease:             cubic-bezier(0.2, 0.8, 0.2, 1);
+  --nk-dur-fast:         140ms;
+  --nk-dur-base:         220ms;
+  --nk-dur-slow:         420ms;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--nk-bg);
+  color: var(--nk-text-primary);
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11', 'ss01';
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+::selection { background: rgba(175,194,212,0.30); color: #fff; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 8px; border: 2px solid transparent; background-clip: padding-box; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.16); background-clip: padding-box; border: 2px solid transparent; }
+
+img, svg { display: block; max-width: 100%; }
+
+button { font-family: inherit; }
+
+a { color: inherit; text-decoration: none; }
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Scroll-reactive ambient background ───────────────────────────────────
+   A three-piece fixed background system that drifts as the user scrolls.
+   All layers are driven by `--nk-scroll` (0..1) set by WebsiteApp's
+   rAF-throttled listener. Opacities are deliberately tiny — the eye
+   should read "atmosphere", never "effect".
+
+   1. .nk-scroll-glow   — three stacked radials (cool silver, warm ivory,
+                          graphite) that drift on different vectors. Their
+                          interplay gives each section a subtly different
+                          tint without per-section JS.
+   2. .nk-scroll-vignette — soft inner shadow that ramps in only after the
+                          page is ~55% scrolled. Tightens the final CTA
+                          and footer toward a center spotlight.
+   3. .nk-scroll-grain  — static SVG fractal-noise tile at minimal opacity.
+                          Doesn't move; just keeps the dark backdrop from
+                          looking like a flat fill on OLED panels.
+
+   Layer order matches DOM order: glow at the bottom, vignette over it,
+   grain on top, and content above all three (page sections are not
+   positioned, so any absolute/relative content with z-index ≥ 1 paints
+   above z:0 fixed layers). */
+.nk-scroll-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    /* Cool silver — anchors the brand accent. Drifts down as user scrolls. */
+    radial-gradient(
+      ellipse 1100px 540px
+      at 50% calc(15% + var(--nk-scroll, 0) * 55%),
+      rgba(175, 194, 212, 0.050) 0%,
+      transparent 65%
+    ),
+    /* Warm ivory — sweeps left→right across mid-page. Gives the
+       "Typed by hand" + early feature blocks a faint champagne warmth. */
+    radial-gradient(
+      ellipse 720px 420px
+      at calc(20% + var(--nk-scroll, 0) * 60%) calc(45% + var(--nk-scroll, 0) * 18%),
+      rgba(228, 213, 184, 0.022) 0%,
+      transparent 62%
+    ),
+    /* Graphite — drifts opposite the silver, fills the negative half. */
+    radial-gradient(
+      ellipse 820px 460px
+      at calc(80% - var(--nk-scroll, 0) * 55%) calc(78% - var(--nk-scroll, 0) * 56%),
+      rgba(160, 172, 184, 0.022) 0%,
+      transparent 60%
+    );
+  transition: background 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.nk-scroll-vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse 70% 70% at 50% 50%,
+    transparent 0%,
+    transparent 55%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  /* Driven by a dedicated --nk-vignette variable (0..1) computed in JS.
+     Doing the curve in JS — opacity = max(0, scroll - 0.55) * 2.2 —
+     sidesteps the older Chromium calc/max edge case where a custom
+     property without an explicit type doesn't fold inside max(). */
+  opacity: var(--nk-vignette, 0);
+  transition: opacity 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.nk-scroll-grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.022;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 240px 240px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nk-scroll-glow {
+    background:
+      radial-gradient(ellipse 1100px 540px at 50% 35%, rgba(175,194,212,0.045) 0%, transparent 65%),
+      radial-gradient(ellipse 720px 420px at 50% 60%, rgba(228,213,184,0.018) 0%, transparent 62%);
+    transition: none;
+  }
+  .nk-scroll-vignette {
+    opacity: 0.18;
+    transition: none;
+  }
+  /* Grain is static — no change needed. */
+}
+
+/* Mobile / weak-GPU lift. Three stacked radials + an SVG noise tile are
+   imperceptible on small screens but expensive to composite every frame.
+   Below 768px, drop to a single small silver radial and disable the grain
+   tile entirely. The `.nk-scroll-vignette` keeps its scroll-driven opacity
+   because it's a single radial — cheap. */
+@media (max-width: 767px) {
+  .nk-scroll-glow {
+    background: radial-gradient(
+      ellipse 480px 280px
+      at 50% calc(20% + var(--nk-scroll, 0) * 50%),
+      rgba(175, 194, 212, 0.040) 0%,
+      transparent 65%
+    );
+    transition: none;
+  }
+  .nk-scroll-grain { display: none; }
+}
+
+/* ── Container ───────────────────────────────────────────────────────────── */
+.nk-container {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 20px;
+  max-width: 1200px;
+}
+@media (min-width: 640px)  { .nk-container { padding-inline: 32px; } }
+@media (min-width: 1024px) { .nk-container { padding-inline: 48px; } }
+
+/* ── Backgrounds ─────────────────────────────────────────────────────────── */
+.nk-bg-page     { background: var(--nk-bg); }
+
+.nk-bg-hero {
+  position: relative;
+  background: var(--nk-bg);
+}
+.nk-bg-hero::before {
+  content: '';
+  position: absolute;
+  inset: -10% 0 auto 0;
+  height: 820px;
+  background:
+    radial-gradient(ellipse 1100px 540px at 50% 0%, rgba(203,213,225,0.08) 0%, rgba(148,163,184,0.035) 40%, transparent 70%),
+    radial-gradient(ellipse 700px 420px at 20% 30%, rgba(148,163,184,0.04) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.nk-bg-glow-soft {
+  position: relative;
+}
+.nk-bg-glow-soft::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 900px 420px at 50% 50%, rgba(148,163,184,0.05) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.nk-bg-section-alt {
+  background: linear-gradient(180deg, #020304 0%, #07090B 50%, #020304 100%);
+}
+
+/* ── Glass cards ─────────────────────────────────────────────────────────── */
+.nk-glass-subtle {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 18px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+}
+.nk-glass-default {
+  background: rgba(255,255,255,0.045);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 20px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    0 8px 28px rgba(0,0,0,0.30);
+}
+.nk-glass-elevated {
+  background: #111113;
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 22px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    0 24px 64px rgba(0,0,0,0.45);
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+.nk-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 13px 22px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  transition:
+    background-color var(--nk-dur-base) var(--nk-ease),
+    border-color var(--nk-dur-base) var(--nk-ease),
+    color var(--nk-dur-base) var(--nk-ease),
+    transform var(--nk-dur-fast) var(--nk-ease),
+    box-shadow var(--nk-dur-base) var(--nk-ease);
+}
+.nk-btn:focus-visible {
+  outline: 2px solid rgba(175,194,212,0.6);
+  outline-offset: 3px;
+}
+.nk-btn:active:not(:disabled) { transform: scale(0.97); }
+
+.nk-btn-primary {
+  background: var(--nk-accent);
+  color: #0B1117;
+  border-color: rgba(175,194,212,0.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.20),
+    0 1px 0 rgba(0,0,0,0.4);
+}
+.nk-btn-primary:hover:not(:disabled) {
+  background: var(--nk-accent-bright);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.22),
+    0 1px 0 rgba(0,0,0,0.4);
+}
+
+.nk-btn-secondary {
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.92);
+  border-color: rgba(255,255,255,0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.nk-btn-secondary:hover:not(:disabled) {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.22);
+}
+
+.nk-btn-ghost {
+  background: transparent;
+  color: rgba(255,255,255,0.68);
+  padding: 10px 14px;
+}
+.nk-btn-ghost:hover:not(:disabled) {
+  color: rgba(255,255,255,0.92);
+  background: rgba(255,255,255,0.04);
+}
+
+.nk-btn-sm { padding: 9px 14px; font-size: 13px; border-radius: 10px; }
+
+/* ── Eyebrow / chip ──────────────────────────────────────────────────────── */
+.nk-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(237,240,246,0.82);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 999px;
+}
+.nk-eyebrow-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--nk-accent-bright);
+  box-shadow: 0 0 6px rgba(214,230,244,0.6);
+}
+
+/* ── Text tokens ─────────────────────────────────────────────────────────── */
+.nk-text-primary     { color: var(--nk-text-primary); }
+.nk-text-secondary   { color: var(--nk-text-secondary); }
+.nk-text-tertiary    { color: var(--nk-text-tertiary); }
+.nk-text-quaternary  { color: var(--nk-text-quaternary); }
+.nk-text-accent      { color: var(--nk-text-accent); }
+
+/* ── Marketing type scale ────────────────────────────────────────────────── */
+.nk-t-display {
+  font-size: clamp(44px, 8vw, 84px);
+  line-height: 1.04;
+  letter-spacing: -0.028em;
+  font-weight: 600;
+}
+.nk-t-h1 {
+  font-size: clamp(34px, 5.2vw, 52px);
+  line-height: 1.1;
+  letter-spacing: -0.024em;
+  font-weight: 600;
+}
+.nk-t-h2 {
+  font-size: clamp(26px, 3.6vw, 36px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+.nk-t-h3 {
+  font-size: 20px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  font-weight: 500;
+}
+.nk-t-body-lg {
+  font-size: clamp(16px, 1.5vw, 18px);
+  line-height: 1.58;
+  letter-spacing: -0.003em;
+  font-weight: 400;
+  color: var(--nk-text-secondary);
+}
+.nk-t-body {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--nk-text-secondary);
+}
+.nk-t-caption {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--nk-text-tertiary);
+}
+
+/* ── Accent underline for hero "evidence" word ───────────────────────────── */
+.nk-accent-word {
+  position: relative;
+  color: #fff;
+  white-space: nowrap;
+}
+.nk-accent-word::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.04em;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(175,194,212,0) 0%, rgba(175,194,212,0.75) 25%, rgba(214,230,244,0.75) 75%, rgba(175,194,212,0) 100%);
+  filter: none;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Hover patterns ──────────────────────────────────────────────────────── */
+.nk-float-hover {
+  transition: transform var(--nk-dur-base) var(--nk-ease),
+              border-color var(--nk-dur-base) var(--nk-ease),
+              background-color var(--nk-dur-base) var(--nk-ease);
+}
+.nk-float-hover:hover { transform: translateY(-2px); }
+
+/* ── Dividers / hairlines ────────────────────────────────────────────────── */
+.nk-hairline {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.12) 50%, transparent 100%);
+}
+
+/* ── Mock window chrome ──────────────────────────────────────────────────── */
+.nk-window {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #111113;
+  border: 1px solid rgba(255,255,255,0.09);
+  box-shadow:
+    0 60px 140px rgba(0,0,0,0.55),
+    0 20px 40px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.nk-window-lg { border-radius: 24px; }
+.nk-window-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  background: rgba(255,255,255,0.025);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.nk-traffic { width: 12px; height: 12px; border-radius: 999px; }
+.nk-traffic-r { background: #ff5f57; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.18); }
+.nk-traffic-y { background: #febc2e; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.18); }
+.nk-traffic-g { background: #28c840; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.18); }
+.nk-window-title {
+  margin-left: 12px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: -0.005em;
+}
+
+/* ── P/L colors for mockups ──────────────────────────────────────────────── */
+.nk-pnl-pos { color: #34d399; }
+.nk-pnl-neg { color: #f87171; }
+.nk-pnl-pos-bg { background: rgba(16,185,129,0.14); }
+.nk-pnl-neg-bg { background: rgba(239,68,68,0.14); }
+
+/* ── Floating annotation pin ─────────────────────────────────────────────── */
+.nk-pin {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(237,240,246,0.88);
+  background: rgba(11,12,15,0.82);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 999px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    0 14px 36px rgba(0,0,0,0.55),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+  white-space: nowrap;
+}
+.nk-pin-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--nk-accent-bright);
+  box-shadow: 0 0 6px rgba(214,230,244,0.6);
+}
+
+/* ── FAQ accordion ───────────────────────────────────────────────────────── */
+.nk-faq-item {
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  transition: border-color var(--nk-dur-base) var(--nk-ease);
+}
+.nk-faq-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 22px 4px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  color: rgba(255,255,255,0.92);
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition: color var(--nk-dur-base) var(--nk-ease);
+}
+.nk-faq-trigger:hover { color: #fff; }
+.nk-faq-chevron {
+  flex-shrink: 0;
+  transition: transform var(--nk-dur-base) var(--nk-ease);
+  color: rgba(255,255,255,0.4);
+}
+.nk-faq-item[data-open='true'] .nk-faq-chevron { transform: rotate(180deg); color: var(--nk-text-accent); }
+.nk-faq-answer {
+  color: rgba(255,255,255,0.62);
+  font-size: 15px;
+  line-height: 1.65;
+  padding: 0 4px 22px;
+  max-width: 640px;
+}
+
+/* ── Utility helpers ─────────────────────────────────────────────────────── */
+.nk-no-select { user-select: none; -webkit-user-select: none; }
+.nk-stroke-hairline { stroke: rgba(255,255,255,0.08); }
+
+/* ── Color polish utilities ──────────────────────────────────────────────
+   Small layered backgrounds + hover effects that add quiet visual life
+   without breaking the Carbon Ice / graphite direction. None of these
+   introduce a new brand color — they're all silver/frost variations of
+   the existing --nk-accent. */
+
+/* Frost-tinted card hover. Drop on a card alongside its base bg/border —
+   on hover it lifts the border to a frost-silver, adds a faint inner
+   highlight, and a soft outer glow. Good for feature cards / download
+   cards / FAQ row hover. */
+.nk-card-frost {
+  border: 1px solid rgba(255,255,255,0.07);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.020) 0%, rgba(255,255,255,0.010) 100%);
+  transition:
+    border-color var(--nk-dur-base) var(--nk-ease),
+    background var(--nk-dur-base) var(--nk-ease),
+    box-shadow var(--nk-dur-base) var(--nk-ease),
+    transform var(--nk-dur-base) var(--nk-ease);
+}
+.nk-card-frost:hover {
+  border-color: rgba(175,194,212,0.32);
+  background:
+    linear-gradient(180deg, rgba(175,194,212,0.045) 0%, rgba(175,194,212,0.012) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    0 14px 40px rgba(0,0,0,0.35),
+    0 0 0 1px rgba(175,194,212,0.10),
+    0 0 32px rgba(175,194,212,0.08);
+}
+
+/* Stronger frost glow — used behind hero CTAs and the preview card to
+   anchor the eye. Drop this on a `aria-hidden` absolute element behind
+   the target; it's a wider soft radial. */
+.nk-frost-glow {
+  position: absolute;
+  inset: -40px;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 50%,
+      rgba(175,194,212,0.10) 0%,
+      rgba(175,194,212,0.03) 35%,
+      transparent 70%);
+  filter: blur(8px);
+}
+
+/* Section "frost" tint — extremely faint horizontal band that gives a
+   section a warm-cool gradient lift without changing perceived
+   background color. Layer behind content as an absolute pseudo-frame. */
+.nk-bg-section-frost {
+  position: relative;
+}
+.nk-bg-section-frost::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 1200px 380px at 50% 0%,
+      rgba(175,194,212,0.035) 0%,
+      transparent 55%),
+    radial-gradient(ellipse 800px 320px at 100% 100%,
+      rgba(216,208,191,0.022) 0%,
+      transparent 60%);
+}
+
+/* Gradient hairline — softer than a flat 1px border-top/bottom.
+   Use as a section divider that fades at the edges. */
+.nk-divider-fade {
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(175,194,212,0.18) 50%,
+    transparent 100%);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   APP-FAITHFUL PREVIEW — verbatim port of src/index.css
+
+   The marketing preview imports the real Nookra components (HeroStats,
+   Calendar, TradeList, Checklist, WidgetContent). Those components reference
+   classes + CSS variables defined in the app's index.css. We reproduce the
+   declarations they need here, all scoped to `.nk-app-preview` so they
+   never bleed into the marketing chrome.
+
+   The scope also pins font-size to 18px to match the app's html root —
+   Tailwind's `text-sm` then resolves to 15.75px, matching the real app.
+   ────────────────────────────────────────────────────────────────────────── */
+
+.nk-app-preview {
+  font-size: 18px;
+  line-height: 1.5;
+  color-scheme: dark;
+  color: #e8e8f0;
+
+  /* The mini app preview keeps a green accent — both because the real Nookra
+     desktop build uses a green-family active state, and because positive P&L
+     values are already emerald inside the components rendered here. Matching
+     accent and positive color keeps the preview feeling like a trading app
+     instead of a silver marketing card. */
+  --accent:        #34d399;
+  --accent-dim:    rgba(52,211,153,0.14);
+  --accent-border: rgba(52,211,153,0.34);
+  --accent-fg:     #04100e;
+
+  --text-primary:     rgba(255,255,255,0.95);
+  --text-secondary:   rgba(255,255,255,0.60);
+  --text-tertiary:    rgba(255,255,255,0.40);
+  --text-quaternary:  rgba(255,255,255,0.25);
+  --text-ghost:       rgba(255,255,255,0.15);
+
+  --color-positive:          #34d399;
+  --color-positive-bright:   #86efac;
+  --color-positive-soft:     rgba(16,185,129,0.12);
+  --color-positive-strong:   rgba(16,185,129,0.22);
+  --color-positive-fill:     rgba(16,185,129,0.42);
+  --color-positive-emphasis: rgba(16,185,129,0.85);
+  --color-negative:          #f87171;
+  --color-negative-soft:     rgba(239,68,68,0.12);
+  --color-negative-strong:   rgba(239,68,68,0.22);
+  --color-negative-fill:     rgba(239,68,68,0.38);
+  --color-negative-emphasis: rgba(239,68,68,0.85);
+  --color-negative-muted:    rgba(239,68,68,0.34);
+  --color-warning:           #fbbf24;
+  --color-warning-strong:    #fb923c;
+  --color-warning-fill:      rgba(251,191,36,0.55);
+  --color-neutral-pnl:       rgba(255,255,255,0.35);
+
+  --edge-resting: rgba(255,255,255,0.08);
+  --edge-strong:  rgba(255,255,255,0.14);
+}
+
+.nk-app-preview .journal-root { background: #09090b; color: #e8e8f0; min-height: 100%; }
+.nk-app-preview .app-header   { background: rgba(9,9,11,0.88); backdrop-filter: blur(12px); }
+.nk-app-preview .modal-panel  { background: #111113; border-color: rgba(255,255,255,0.07); }
+
+/* Mobile lift: drop the heaviest preview-card shadow layer (160px blur)
+   on small screens. Saves a paint on every scroll over the preview. */
+@media (max-width: 767px) {
+  .nk-app-preview-card {
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.04) inset,
+      0 30px 60px rgba(0,0,0,0.4) !important;
+  }
+}
+
+.nk-app-preview .cal-cell       { height: 88px; }
+.nk-app-preview .cal-cell-empty { height: 88px; }
+.nk-app-preview .trade-row      { padding-top: 1rem; padding-bottom: 1rem; }
+
+.nk-app-preview .glass-panel {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+}
+.nk-app-preview .glass-panel-elevated {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+}
+.nk-app-preview .glass-panel-floating {
+  background: #111113;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+}
+
+.nk-app-preview .placed-widget {
+  background: rgba(255,255,255,0.060);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 22px rgba(0,0,0,0.26), inset 0 1px 0 rgba(255,255,255,0.08);
+  transition: filter 150ms ease-out, box-shadow 150ms ease-out;
+}
+.nk-app-preview .placed-widget:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 3px 26px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.10);
+}
+
+.nk-app-preview .text-positive { color: #34d399; }
+.nk-app-preview .text-negative { color: #f87171; }
+.nk-app-preview .text-warning  { color: #fbbf24; }
+
+.nk-app-preview .float-hover {
+  cursor: pointer;
+  transition: transform 150ms ease-out, opacity 150ms ease-out,
+              background-color 150ms ease-out, border-color 150ms ease-out,
+              color 150ms ease-out, box-shadow 150ms ease-out;
+}
+.nk-app-preview .float-hover:hover:not([disabled]):not(:disabled) { transform: translateY(-2px); }
+.nk-app-preview .float-hover:active:not([disabled]):not(:disabled) { transform: translateY(0) scale(0.97); }
+
+.nk-app-preview .close-hover {
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 150ms ease-out, color 150ms ease-out,
+              background-color 150ms ease-out, border-color 150ms ease-out;
+}
+.nk-app-preview .close-hover:hover {
+  color: rgb(248, 113, 113);
+  background-color: rgba(239,68,68,0.06);
+  border-color: rgba(239,68,68,0.28);
+}
+
+.nk-app-preview .input-field {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: #fff;
+  outline: none;
+  transition: background-color 150ms ease-out, border-color 150ms ease-out;
+}
+
+.nk-app-preview .label-text {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.30);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Disable the "+ Add item" / "+ Add divider" / per-row × buttons inside the
+   preview Checklist. The real Checklist component renders them; we keep them
+   visible (so the chrome matches the app) but dim and unclickable so the
+   preview cannot grow or shrink the demo list. */
+.nk-checklist-locked button.text-xs.text-white\/25,
+.nk-checklist-locked button.close-hover {
+  opacity: 0.45;
+  pointer-events: none;
+  cursor: default;
+}
+.nk-checklist-locked button.text-xs.text-white\/25:hover {
+  color: rgba(255,255,255,0.25);
+  background: transparent;
+}
+
+/* Hide the Checklist progress bar (h-px line + "x / y" counter) inside the
+   preview. In the real app it sits directly under the "Pre-Trade Checklist"
+   section label and reads as the section's status. Inside a scrollable
+   preview window the section label scrolls off-screen, leaving the progress
+   bar as a stray horizontal stroke at the top of the visible area. Hiding
+   it removes that stray-line look. */
+.nk-checklist-locked > div > div:first-child:has(> .h-px.relative) {
+  display: none;
+}
+
+/* Internal scroll area — when the cursor is over the preview, the wheel
+   scrolls the preview's own content instead of the outer page. Kept thin
+   and dim so it doesn't add visual chrome to the marketing card. */
+.nk-app-preview-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.10) transparent;
+}
+.nk-app-preview-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+.nk-app-preview-scroll::-webkit-scrollbar-track { background: transparent; }
+.nk-app-preview-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.08);
+  border-radius: 6px;
+}
+.nk-app-preview-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.18);
+}
+
