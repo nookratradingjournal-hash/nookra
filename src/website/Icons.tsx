@@ -17,11 +17,13 @@ export const NookraMark: React.FC<{ size?: number; className?: string }> = ({ si
   <svg width={size} height={size} viewBox="0 0 28 28" fill="none" className={className} aria-hidden>
     <defs>
       <linearGradient id="nk-mark" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse">
-        {/* Carbon Ice silver gradient — matches the desktop app's brand
-            accent. Was emerald before; switched so the website mark and
-            the in-app accent read as the same product. */}
-        <stop stopColor="#D6E6F4" />
-        <stop offset="1" stopColor="#AFC2D4" />
+        {/* Pure white → light-pearl gradient. Matches the app's "no
+            accent" direction — the brand mark reads as bright minimal
+            chrome on the dark bg, no longer competing with the
+            green/red P&L semantics. Was silver before, was emerald
+            before that. */}
+        <stop stopColor="#FFFFFF" />
+        <stop offset="1" stopColor="#E5E5E5" />
       </linearGradient>
     </defs>
     <rect x="1" y="1" width="26" height="26" rx="8" fill="#0b0b0d" stroke="rgba(255,255,255,0.08)" />

@@ -655,14 +655,14 @@ html { scroll-behavior: smooth; }
   color-scheme: dark;
   color: #e8e8f0;
 
-  /* Mini app preview accent — matches the real desktop app's accent
-     (Carbon Ice silver) so the website preview reflects what users
-     actually see when they install Nookra. P&L colors below stay
-     emerald/red because those are trading semantics, not brand. */
-  --accent:        #AFC2D4;
-  --accent-dim:    rgba(175,194,212,0.14);
-  --accent-border: rgba(175,194,212,0.34);
-  --accent-fg:     #0B1117;
+  /* Mini app preview accent — matches the real desktop app's "no accent"
+     pure-white. The website preview reflects what users actually see in
+     the installed app: minimal white-on-black, with red/green reserved
+     for P&L semantics only. */
+  --accent:        #FFFFFF;
+  --accent-dim:    rgba(255,255,255,0.08);
+  --accent-border: rgba(255,255,255,0.30);
+  --accent-fg:     #09090b;
 
   --text-primary:     rgba(255,255,255,0.95);
   --text-secondary:   rgba(255,255,255,0.60);

@@ -96,21 +96,19 @@
 }
 
 /* ── Accent color system ─────────────────────────────────────────────────
-   Carbon Ice silver — matches the marketing site's brand accent so the
-   app and the website read as one product. Used for primary CTAs,
-   selected states, active tabs, focus rings, progress indicators, and
-   any non-P&L highlights. Semantic P&L colors (emerald profit, red loss)
-   live in the next block and stay distinct — silver is brand, green/red
-   are trading semantics.
+   No-accent / pure-white. The app's brand color is now the absence of
+   color — Apple Stocks app territory. White text + UI on the dark bg,
+   with red/green reserved exclusively for P&L semantics. This is the
+   most restrained possible look: nothing competes with the trading
+   colors, the eye goes straight to the data.
    ─────────────────────────────────────────────────────────────────────── */
 :root {
-  --accent:        #AFC2D4;
-  --accent-dim:    rgba(175,194,212,0.14);
-  --accent-border: rgba(175,194,212,0.34);
-  /* Dark foreground on the silver bg — matches the marketing site's
-     primary-button text color (#0B1117). Pure white was readable on the
-     old teal but loses contrast on silver. */
-  --accent-fg:     #0B1117;
+  --accent:        #FFFFFF;
+  --accent-dim:    rgba(255,255,255,0.08);
+  --accent-border: rgba(255,255,255,0.30);
+  /* Dark foreground on white accent — matches the app's bg so a primary
+     button reads as "negative space" cut into the dark surface. */
+  --accent-fg:     #09090b;
 }
 
 /* ── Journal structural elements ─────────────────────────────────────────── */
