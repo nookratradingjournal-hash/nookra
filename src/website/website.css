@@ -655,14 +655,14 @@ html { scroll-behavior: smooth; }
   color-scheme: dark;
   color: #e8e8f0;
 
-  /* Mini app preview accent — matches the real desktop app's "no accent"
-     pure-white. The website preview reflects what users actually see in
-     the installed app: minimal white-on-black, with red/green reserved
-     for P&L semantics only. */
-  --accent:        #FFFFFF;
-  --accent-dim:    rgba(255,255,255,0.08);
-  --accent-border: rgba(255,255,255,0.30);
-  --accent-fg:     #09090b;
+  /* Mini app preview accent — matches the real desktop app's Apple
+     Graphite (#8E8E93). Website preview reflects exactly what users see
+     when they install Nookra: macOS System Gray for non-P&L UI, with
+     red/green reserved for trading semantics only. */
+  --accent:        #8E8E93;
+  --accent-dim:    rgba(142,142,147,0.18);
+  --accent-border: rgba(142,142,147,0.42);
+  --accent-fg:     #FFFFFF;
 
   --text-primary:     rgba(255,255,255,0.95);
   --text-secondary:   rgba(255,255,255,0.60);

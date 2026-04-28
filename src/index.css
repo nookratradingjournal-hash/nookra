@@ -96,19 +96,19 @@
 }
 
 /* ── Accent color system ─────────────────────────────────────────────────
-   No-accent / pure-white. The app's brand color is now the absence of
-   color — Apple Stocks app territory. White text + UI on the dark bg,
-   with red/green reserved exclusively for P&L semantics. This is the
-   most restrained possible look: nothing competes with the trading
-   colors, the eye goes straight to the data.
+   Apple Graphite (#8E8E93) — the System Gray accent macOS ships in
+   System Settings → Appearance for users who want "no color". Used by
+   Apple Stocks, Calculator, parts of Activity Monitor. Picks up the
+   "feels native to macOS" cue without competing with the red/green P&L
+   semantics — the data is the only color signal on screen.
    ─────────────────────────────────────────────────────────────────────── */
 :root {
-  --accent:        #FFFFFF;
-  --accent-dim:    rgba(255,255,255,0.08);
-  --accent-border: rgba(255,255,255,0.30);
-  /* Dark foreground on white accent — matches the app's bg so a primary
-     button reads as "negative space" cut into the dark surface. */
-  --accent-fg:     #09090b;
+  --accent:        #8E8E93;
+  --accent-dim:    rgba(142,142,147,0.18);
+  --accent-border: rgba(142,142,147,0.42);
+  /* White foreground on graphite — matches macOS's own sidebar-selection
+     and graphite-button text contrast. */
+  --accent-fg:     #FFFFFF;
 }
 
 /* ── Journal structural elements ─────────────────────────────────────────── */
