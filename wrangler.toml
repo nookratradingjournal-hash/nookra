@@ -1,0 +1,22 @@
+# ── Cloudflare Workers config — static-site deploy via Workers Static Assets.
+#
+# What this does: tells `npx wrangler deploy` to ship the contents of
+# `./website/` (the build output of `npm run build:website`) to Cloudflare's
+# edge. No actual Worker script — just the static files. Cloudflare serves
+# them globally, gives you a `*.workers.dev` URL, and lets you attach a
+# custom domain later.
+#
+# This file lives in the repo root because Cloudflare's Workers & Pages
+# build pipeline expects it there. The repo's actual Worker entry point
+# (`main = "..."`) is intentionally absent — without it, Workers Static
+# Assets serves files directly without invoking any JS at the edge.
+
+name = "nookra"
+compatibility_date = "2024-09-01"
+
+# Static assets to serve. `./website` is the directory Vite writes to via
+# `npm run build:website` (configured in vite.config.website.ts). Cloudflare
+# will look in this folder after the build command runs.
+[assets]
+directory = "./website"
+not_found_handling = "single-page-application"
