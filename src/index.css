@@ -6,10 +6,14 @@
   *, *::before, *::after { box-sizing: border-box; }
 
   html {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    /* Helvetica Neue — Apple's pre-2015 system font, still ships with
+       macOS so it loads instantly with no fetch. Classic Swiss design,
+       feels native-Mac without the rounded warmth of SF Pro. The
+       cv0X font-feature-settings were Inter-specific stylistic
+       alternates that did nothing on Helvetica anyway — removed. */
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     /* Pre-app baseline — activation, onboarding, tutorial, settings, and
        any other system UI renders against this 18px root. The in-app
        FontSizeController (mounted only inside the main journal) overrides

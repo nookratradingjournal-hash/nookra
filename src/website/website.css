@@ -55,7 +55,10 @@ html, body {
   padding: 0;
   background: var(--nk-bg);
   color: var(--nk-text-primary);
-  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+  /* Helvetica Neue to match the desktop app — pre-installed on macOS,
+     no Google Font fetch. Falls back through Helvetica/Arial for any
+     non-Mac visitors. */
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11', 'ss01';
