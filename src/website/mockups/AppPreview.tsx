@@ -155,7 +155,7 @@ export const AppPreview: React.FC = () => {
                 <span className="text-[10.5px] font-semibold tracking-[0.16em] text-white/30 uppercase select-none">
                   Nookra
                 </span>
-                <span className="ml-2 text-[8.5px] font-bold text-[#86efac]/90 uppercase tracking-[0.16em] select-none px-1.5 py-0.5 rounded-md bg-[rgba(52,211,153,0.12)] border border-[rgba(52,211,153,0.30)]">
+                <span className="ml-2 text-[8.5px] font-bold text-[#D6E6F4]/90 uppercase tracking-[0.16em] select-none px-1.5 py-0.5 rounded-md bg-[rgba(175,194,212,0.12)] border border-[rgba(175,194,212,0.30)]">
                   Preview
                 </span>
               </div>

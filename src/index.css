@@ -96,15 +96,21 @@
 }
 
 /* ── Accent color system ─────────────────────────────────────────────────
-   Single global teal. Used for primary CTAs, selected states, active tabs,
-   focus rings, progress indicators, non-P&L highlights. Semantic P&L colors
-   (emerald profit, red loss) live elsewhere and are intentionally distinct.
+   Carbon Ice silver — matches the marketing site's brand accent so the
+   app and the website read as one product. Used for primary CTAs,
+   selected states, active tabs, focus rings, progress indicators, and
+   any non-P&L highlights. Semantic P&L colors (emerald profit, red loss)
+   live in the next block and stay distinct — silver is brand, green/red
+   are trading semantics.
    ─────────────────────────────────────────────────────────────────────── */
 :root {
-  --accent:        #14b8a6;
-  --accent-dim:    rgba(20,184,166,0.14);
-  --accent-border: rgba(20,184,166,0.34);
-  --accent-fg:     #ffffff;
+  --accent:        #AFC2D4;
+  --accent-dim:    rgba(175,194,212,0.14);
+  --accent-border: rgba(175,194,212,0.34);
+  /* Dark foreground on the silver bg — matches the marketing site's
+     primary-button text color (#0B1117). Pure white was readable on the
+     old teal but loses contrast on silver. */
+  --accent-fg:     #0B1117;
 }
 
 /* ── Journal structural elements ─────────────────────────────────────────── */
