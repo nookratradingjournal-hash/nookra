@@ -1386,21 +1386,42 @@ function ActivationScreen({
         )}
 
         {tab === 'purchase' && (
-          <div>
-            <p className="text-secondary text-center leading-relaxed">
-              One-time purchase. Lifetime usage. No subscription.
+          <div className="text-center">
+            {/* Big-number price — $20 was previously invisible on the
+                Purchase tab. Now it's the visual anchor; everything else
+                supports it. Tracking-tight + tabular-nums keeps it
+                rendering as a number, not a logo. */}
+            <div className="mb-2 mt-1 flex items-baseline justify-center gap-2">
+              <span className="text-white font-semibold tabular-nums" style={{ fontSize: 36, letterSpacing: '-0.02em', lineHeight: 1 }}>
+                $20
+              </span>
+              <span className="text-secondary" style={{ fontSize: 14 }}>
+                one-time
+              </span>
+            </div>
+            <p className="text-secondary leading-relaxed mb-5" style={{ fontSize: 13 }}>
+              Lifetime usage. No subscription.
             </p>
-            <div className="flex flex-col gap-1.5 mt-4">
-              {[
-                'Activate on up to 2 devices',
-                'Lifetime updates included',
-                'No recurring fees',
-              ].map((b) => (
-                <div key={b} className="flex items-center gap-1.5">
-                  <Icon name="check" size={14} className="icon-accent" />
-                  <span className="text-tertiary">{b}</span>
+
+            {/* Benefits — wrapped in a centered max-width column so the
+                group is visually centered while individual rows stay
+                left-aligned (Apple's setup-flow pattern). Each benefit
+                gets a semantic icon, not a generic check. */}
+            <div className="mx-auto" style={{ maxWidth: 240 }}>
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-2.5 text-left">
+                  <Icon name="laptop" size={14} className="icon-accent shrink-0" />
+                  <span className="text-tertiary">Activate on up to 2 devices</span>
                 </div>
-              ))}
+                <div className="flex items-center gap-2.5 text-left">
+                  <Icon name="shield-check" size={14} className="icon-accent shrink-0" />
+                  <span className="text-tertiary">Lifetime updates included</span>
+                </div>
+                <div className="flex items-center gap-2.5 text-left">
+                  <Icon name="check" size={14} className="icon-accent shrink-0" />
+                  <span className="text-tertiary">No recurring fees</span>
+                </div>
+              </div>
             </div>
           </div>
         )}
