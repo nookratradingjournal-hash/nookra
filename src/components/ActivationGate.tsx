@@ -240,7 +240,7 @@ export function ActivationGate({ children }: Props) {
       //                       total ~120px more vertical content. 700
       //                       gives a comfortable buffer on the
       //                       tallest tab (Purchase).
-      let height = 700
+      let height = 600
       if (nameEntry !== null) height = 520
       else if (welcomeSession !== null) height = 560
       if (status !== 'loading') {
@@ -1246,23 +1246,20 @@ function ActivationScreen({
 
   return (
     <div className="flex-1 flex flex-col justify-center overflow-hidden">
-      {/* ── Top: Title + subtitle — app's semantic type tokens ──────────── */}
-      <div className="px-7 pt-8 text-center shrink-0">
-        <h1 className="text-title-sm mb-2">
+      {/* ── Top: Title + subtitle — compact sizes so the whole dialog
+           fits without scrolling. Was 22/16 with pt-8 mb-2 — sized for
+           a much taller window. */}
+      <div className="px-7 pt-5 text-center shrink-0">
+        <h1 className="mb-1.5" style={{ fontSize: 19, fontWeight: 600, letterSpacing: '-0.015em', lineHeight: 1.2 }}>
           Activate Nookra
         </h1>
-        <p className="text-secondary mx-auto" style={{ maxWidth: 320 }}>
+        <p className="text-secondary mx-auto" style={{ maxWidth: 300, fontSize: 13, lineHeight: 1.45 }}>
           Choose how you&rsquo;d like to activate Nookra and get started.
         </p>
       </div>
 
-      {/* ── Middle: vertical method picker (Setup-Assistant style) ─────────
-           Replaces the older 3-up horizontal card grid. Apple's setup
-           flows stack consequential decisions vertically with monochrome
-           icons + title + subtitle + chevron — no per-option color
-           coding. The selected row is the only colored thing; everything
-           else stays neutral. */}
-      <div className="px-7 pt-7 shrink-0">
+      {/* ── Middle: vertical method picker (Setup-Assistant style) ───────── */}
+      <div className="px-7 pt-5 shrink-0">
         <div className="tab-list">
           {tabs.map((t) => {
             const active = tab === t.id
@@ -1291,7 +1288,7 @@ function ActivationScreen({
       </div>
 
       {/* ── Content section (per tab) ──────────────────────────────────── */}
-      <div className="px-7 pt-6">
+      <div className="px-7 pt-4">
 
         {tab === 'license' && (
           <div>
@@ -1394,38 +1391,32 @@ function ActivationScreen({
 
         {tab === 'purchase' && (
           <div className="text-center">
-            {/* Big-number price — $20 was previously invisible on the
-                Purchase tab. Now it's the visual anchor; everything else
-                supports it. Tracking-tight + tabular-nums keeps it
-                rendering as a number, not a logo. */}
-            <div className="mb-2 mt-1 flex items-baseline justify-center gap-2">
-              <span className="text-white font-semibold tabular-nums" style={{ fontSize: 36, letterSpacing: '-0.02em', lineHeight: 1 }}>
+            {/* Big-number price, now sized down so the whole purchase
+                tab fits the compact window. 30/13 with tighter margins. */}
+            <div className="mb-1 mt-0.5 flex items-baseline justify-center gap-2">
+              <span className="text-white font-semibold tabular-nums" style={{ fontSize: 30, letterSpacing: '-0.02em', lineHeight: 1 }}>
                 $20
               </span>
-              <span className="text-secondary" style={{ fontSize: 14 }}>
+              <span className="text-secondary" style={{ fontSize: 13 }}>
                 one-time
               </span>
             </div>
-            <p className="text-secondary leading-relaxed mb-5" style={{ fontSize: 13 }}>
+            <p className="text-secondary leading-relaxed mb-3" style={{ fontSize: 12 }}>
               Lifetime usage. No subscription.
             </p>
 
-            {/* Benefits — wrapped in a centered max-width column so the
-                group is visually centered while individual rows stay
-                left-aligned (Apple's setup-flow pattern). Each benefit
-                gets a semantic icon, not a generic check. */}
             <div className="mx-auto" style={{ maxWidth: 240 }}>
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-2.5 text-left">
-                  <Icon name="laptop" size={14} className="icon-accent shrink-0" />
+              <div className="flex flex-col gap-1.5">
+                <div className="flex items-center gap-2.5 text-left" style={{ fontSize: 12.5 }}>
+                  <Icon name="laptop" size={13} className="icon-accent shrink-0" />
                   <span className="text-tertiary">Activate on up to 2 devices</span>
                 </div>
-                <div className="flex items-center gap-2.5 text-left">
-                  <Icon name="shield-check" size={14} className="icon-accent shrink-0" />
+                <div className="flex items-center gap-2.5 text-left" style={{ fontSize: 12.5 }}>
+                  <Icon name="shield-check" size={13} className="icon-accent shrink-0" />
                   <span className="text-tertiary">Lifetime updates included</span>
                 </div>
-                <div className="flex items-center gap-2.5 text-left">
-                  <Icon name="check" size={14} className="icon-accent shrink-0" />
+                <div className="flex items-center gap-2.5 text-left" style={{ fontSize: 12.5 }}>
+                  <Icon name="check" size={13} className="icon-accent shrink-0" />
                   <span className="text-tertiary">No recurring fees</span>
                 </div>
               </div>
@@ -1436,7 +1427,7 @@ function ActivationScreen({
       </div>
 
       {/* ── Bottom: recovery link + action button ──────────────────────── */}
-      <div className="px-7 pb-7 pt-6 shrink-0">
+      <div className="px-7 pb-5 pt-4 shrink-0">
         {tab === 'license' && (
           <div
             className="flex items-center justify-center"

@@ -425,8 +425,8 @@
 .tab-card {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
+  gap: 11px;
+  padding: 9px 12px;
   background: transparent;
   border: 0;
   border-radius: 0;
@@ -444,7 +444,7 @@
 
 /* Monochrome icon container — no colored fill, no per-tab tint. */
 .tab-chip {
-  width: 28px; height: 28px;
+  width: 24px; height: 24px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -467,7 +467,7 @@
   min-width: 0;
 }
 .tab-card__label {
-  font-size: 13.5px;
+  font-size: 12.5px;
   font-weight: 500;
   letter-spacing: -0.005em;
   color: rgba(255,255,255,0.92);
@@ -476,10 +476,10 @@
 .tab-card--active .tab-card__label { color: #5eead4; /* teal-300 */ }
 
 .tab-card__sub {
-  font-size: 11.5px;
+  font-size: 11px;
   color: rgba(255,255,255,0.45);
   margin-top: 1px;
-  line-height: 1.4;
+  line-height: 1.35;
 }
 
 .tab-card__chevron {
