@@ -1362,27 +1362,51 @@ function ActivationScreen({
 
         {tab === 'trial' && (
           canTrial ? (
-            <div>
-              <p className="text-secondary text-center leading-relaxed">
+            <div className="text-center">
+              {/* Big-number duration — parallel to the Purchase tab's $20.
+                  Gives the Trial tab the same visual anchor structure so
+                  the two tabs feel like siblings, not different layouts. */}
+              <div className="mb-1 mt-0.5 flex items-baseline justify-center gap-2">
+                <span className="text-white font-semibold tabular-nums" style={{ fontSize: 30, letterSpacing: '-0.02em', lineHeight: 1 }}>
+                  24h
+                </span>
+                <span className="text-secondary" style={{ fontSize: 13 }}>
+                  free
+                </span>
+              </div>
+              <p className="text-secondary leading-relaxed mb-3" style={{ fontSize: 12 }}>
                 {isResume
                   ? 'Your trial is still active. Pick up where you left off.'
-                  : 'Full access for 24 hours. No payment or setup required.'}
+                  : 'No payment or setup required.'}
               </p>
-              <div className="flex flex-col gap-1.5 mt-4">
-                {['Full feature access', 'No payment required', 'Instant activation'].map((b) => (
-                  <div key={b} className="flex items-center gap-1.5">
-                    <Icon name="check" size={14} className="icon-accent" />
-                    <span className="text-tertiary">{b}</span>
+
+              {/* Benefits — same centered-group / left-aligned-rows
+                  pattern as the Purchase tab. Semantic icons (key/lock,
+                  shield, bolt) instead of three identical checks. */}
+              <div className="mx-auto" style={{ maxWidth: 240 }}>
+                <div className="flex flex-col gap-1.5">
+                  <div className="flex items-center gap-2.5 text-left" style={{ fontSize: 12.5 }}>
+                    <Icon name="key" size={14} className="icon-accent shrink-0" />
+                    <span className="text-tertiary">Full feature access</span>
                   </div>
-                ))}
+                  <div className="flex items-center gap-2.5 text-left" style={{ fontSize: 12.5 }}>
+                    <Icon name="check" size={14} className="icon-accent shrink-0" />
+                    <span className="text-tertiary">No payment required</span>
+                  </div>
+                  <div className="flex items-center gap-2.5 text-left" style={{ fontSize: 12.5 }}>
+                    <Icon name="clock" size={14} className="icon-accent shrink-0" />
+                    <span className="text-tertiary">Instant activation</span>
+                  </div>
+                </div>
               </div>
+
               {error && (
                 <p className="text-caption mt-3 text-center text-negative">{error}</p>
               )}
             </div>
           ) : (
             <div className="text-center">
-              <p className="text-tertiary leading-relaxed">
+              <p className="text-tertiary leading-relaxed" style={{ fontSize: 12.5 }}>
                 Your free trial has been used on this device. Enter a license key to continue.
               </p>
             </div>
