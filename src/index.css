@@ -6,12 +6,13 @@
   *, *::before, *::after { box-sizing: border-box; }
 
   html {
-    /* Helvetica Neue — Apple's pre-2015 system font, still ships with
-       macOS so it loads instantly with no fetch. Classic Swiss design,
-       feels native-Mac without the rounded warmth of SF Pro. The
-       cv0X font-feature-settings were Inter-specific stylistic
-       alternates that did nothing on Helvetica anyway — removed. */
+    /* Helvetica Neue Medium — Apple's pre-2015 system font, bumped from
+       Regular (400) to Medium (500) so all text reads as a touch
+       thicker / more present. Native to macOS so no Google-Fonts fetch
+       needed. Classic Swiss design, feels native-Mac without the
+       rounded warmth of SF Pro. */
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 500;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     /* Pre-app baseline — activation, onboarding, tutorial, settings, and
@@ -26,6 +27,27 @@
     background: #09090b;
     color: #e8e8f0;
     margin: 0;
+    /* Disable text selection across the entire app surface — feels more
+       like a native macOS app and prevents the accidental "ugly blue
+       highlight" when you double-click a label or drag past a button.
+       The override below re-enables selection in inputs/textareas/
+       contenteditable so the user can still edit and copy values from
+       fields where it actually matters. */
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* Re-enable selection where it's functionally required: form inputs,
+     textareas, and any contenteditable surface. Without this exception
+     the user couldn't even cmd+A inside the trade-entry text fields. */
+  input,
+  textarea,
+  [contenteditable='true'],
+  [contenteditable='true'] *,
+  .allow-select,
+  .allow-select * {
+    user-select: text;
+    -webkit-user-select: text;
   }
 
   ::selection { background: rgba(255,255,255,0.15); }
