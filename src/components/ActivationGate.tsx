@@ -1408,15 +1408,15 @@ function ActivationScreen({
             <div className="mx-auto" style={{ maxWidth: 240 }}>
               <div className="flex flex-col gap-1.5">
                 <div className="flex items-center gap-2.5 text-left" style={{ fontSize: 12.5 }}>
-                  <Icon name="laptop" size={13} className="icon-accent shrink-0" />
+                  <Icon name="laptop" size={14} className="icon-accent shrink-0" />
                   <span className="text-tertiary">Activate on up to 2 devices</span>
                 </div>
                 <div className="flex items-center gap-2.5 text-left" style={{ fontSize: 12.5 }}>
-                  <Icon name="shield-check" size={13} className="icon-accent shrink-0" />
+                  <Icon name="shield-check" size={14} className="icon-accent shrink-0" />
                   <span className="text-tertiary">Lifetime updates included</span>
                 </div>
                 <div className="flex items-center gap-2.5 text-left" style={{ fontSize: 12.5 }}>
-                  <Icon name="check" size={13} className="icon-accent shrink-0" />
+                  <Icon name="check" size={14} className="icon-accent shrink-0" />
                   <span className="text-tertiary">No recurring fees</span>
                 </div>
               </div>
