@@ -1218,14 +1218,19 @@ function ActivationScreen({
     : !isExpired
   const isResume = trialStatus?.active && trialStatus?.used
 
-  const tabs: { id: ActivationTab; label: string }[] = [
-    { id: 'license', label: 'License' },
-    { id: 'trial', label: 'Trial' },
-    { id: 'purchase', label: 'Purchase' },
+  // Subtitle copy comes straight from the macOS Setup Assistant playbook —
+  // each row needs one short line explaining what the choice does. Without
+  // subtitles "License vs Purchase" is genuinely ambiguous to a first-time
+  // visitor.
+  const tabs: { id: ActivationTab; label: string; sub: string }[] = [
+    { id: 'license',  label: 'License',  sub: 'Enter a paid activation key' },
+    { id: 'trial',    label: 'Trial',    sub: 'Try free for 1 day' },
+    { id: 'purchase', label: 'Purchase', sub: 'Open the purchase page' },
   ]
 
-  // Tab icons — Alcove reference: License = shield-check, Trial = clock,
-  // Purchase = key. All rendered inside a filled colored chip below.
+  // Tab icons — monochrome (single tone), no per-tab color identity.
+  // The selected row carries the only color signal: a subtle teal fill
+  // behind the whole row plus the icon flipping to teal-300.
   const tabIcons: Record<ActivationTab, IconName> = {
     license:  'shield-check',
     trial:    'clock',
@@ -1244,12 +1249,14 @@ function ActivationScreen({
         </p>
       </div>
 
-      {/* ── Middle: 3 tab cards ─────────────────────────────────────────── */}
-      {/* Each card is styled by .tab-card in index.css — hover lift, active
-           state with accent glow. Chip has per-tab gradient identity:
-           License = emerald, Trial = amber/orange, Purchase = violet.    */}
+      {/* ── Middle: vertical method picker (Setup-Assistant style) ─────────
+           Replaces the older 3-up horizontal card grid. Apple's setup
+           flows stack consequential decisions vertically with monochrome
+           icons + title + subtitle + chevron — no per-option color
+           coding. The selected row is the only colored thing; everything
+           else stays neutral. */}
       <div className="px-7 pt-7 shrink-0">
-        <div className="grid grid-cols-3" style={{ gap: 10 }}>
+        <div className="tab-list">
           {tabs.map((t) => {
             const active = tab === t.id
             return (
@@ -1261,9 +1268,15 @@ function ActivationScreen({
                 type="button"
               >
                 <div className="tab-chip">
-                  <Icon name={tabIcons[t.id]} size={16} />
+                  <Icon name={tabIcons[t.id]} size={18} />
                 </div>
-                <span className="tab-card__label">{t.label}</span>
+                <div className="tab-card__text">
+                  <span className="tab-card__label">{t.label}</span>
+                  <span className="tab-card__sub">{t.sub}</span>
+                </div>
+                <div className="tab-card__chevron">
+                  <Icon name="chevron-right" size={14} />
+                </div>
               </button>
             )
           })}

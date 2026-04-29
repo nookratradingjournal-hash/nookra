@@ -399,108 +399,100 @@
    in a crisp per-tab accent outline (1px @ 0.80) + a soft 1px outer
    halo (@ 0.22) that together form a clean ~2px colored edge — the
    "selected" emphasis from the reference, no glow. */
-.tab-card {
+/* ── Activation method picker (Setup-Assistant-style vertical list) ──────
+   Replaces the older 3-column horizontal card grid. Apple's setup flows
+   stack consequential decisions vertically with monochrome icons + title
+   + subtitle + chevron — no per-option color coding. The selected row
+   carries the only color signal: a subtle teal fill behind the row,
+   icon flips to teal-300, label flips to teal-300. Everything else stays
+   neutral.
+
+   Container: single rounded surface with hairline dividers between rows,
+   so the three options read as one unified control rather than three
+   competing cards. */
+.tab-list {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  padding: 12px 8px;
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.03);
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.06);
   border-radius: 12px;
+  overflow: hidden;
+}
+.tab-list > .tab-card + .tab-card {
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.tab-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
   cursor: pointer;
-  transition:
-    background-color 150ms ease-out,
-    border-color 150ms ease-out,
-    box-shadow 150ms ease-out,
-    transform 150ms ease-out;
+  text-align: left;
+  width: 100%;
+  transition: background-color 150ms ease-out;
 }
 .tab-card:hover:not(.tab-card--active) {
   background: rgba(255,255,255,0.04);
-  border-color: rgba(255,255,255,0.08);
 }
-.tab-card:active { transform: scale(0.98); }
 .tab-card--active {
-  background: rgba(255,255,255,0.08);
+  background: rgba(13,148,136,0.16);
 }
 
-/* Active per-tab accent outline + visible 1px outer ring.
-   Border carries the crisp inner edge (0.85 alpha). The box-shadow
-   adds a second 1px ring outside the border at 0.35 alpha — high
-   enough to actually register visually, matching the reference's
-   clean ~2px double-edge look. No blur, no spread, no glow. */
-.tab-card--active[data-tab="license"] {
-  border-color: rgba(20,184,166,0.85);
-  box-shadow: 0 0 0 1px rgba(20,184,166,0.35);
-}
-.tab-card--active[data-tab="trial"] {
-  border-color: rgba(249,168,37,0.85);
-  box-shadow: 0 0 0 1px rgba(249,168,37,0.35);
-}
-.tab-card--active[data-tab="purchase"] {
-  border-color: rgba(244,114,182,0.85);
-  box-shadow: 0 0 0 1px rgba(244,114,182,0.35);
-}
-
-/* Tab chip — per-tab Alcove-style tinted tile.
-   30×30 rounded-lg square with a saturated-but-soft per-tab tint
-   (~0.32) behind a pure white icon. Slightly stronger on hover and
-   again on active. */
+/* Monochrome icon container — no colored fill, no per-tab tint. */
 .tab-chip {
-  width: 30px; height: 30px;
+  width: 28px; height: 28px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 9px;
-  background: rgba(255,255,255,0.08);
-  color: #ffffff;
-  transition: background-color 150ms ease-out;
-}
-
-/* License — teal accent tint */
-.tab-card[data-tab="license"] .tab-chip {
-  background: rgba(20,184,166,0.55);
-}
-.tab-card[data-tab="license"]:hover:not(.tab-card--active) .tab-chip {
-  background: rgba(20,184,166,0.62);
-}
-.tab-card--active[data-tab="license"] .tab-chip {
-  background: rgba(20,184,166,0.68);
-}
-
-/* Trial — soft warm amber tint */
-.tab-card[data-tab="trial"] .tab-chip {
-  background: rgba(249,168,37,0.55);
-}
-.tab-card[data-tab="trial"]:hover:not(.tab-card--active) .tab-chip {
-  background: rgba(249,168,37,0.62);
-}
-.tab-card--active[data-tab="trial"] .tab-chip {
-  background: rgba(249,168,37,0.68);
-}
-
-/* Purchase — soft pink tint */
-.tab-card[data-tab="purchase"] .tab-chip {
-  background: rgba(244,114,182,0.55);
-}
-.tab-card[data-tab="purchase"]:hover:not(.tab-card--active) .tab-chip {
-  background: rgba(244,114,182,0.62);
-}
-.tab-card--active[data-tab="purchase"] .tab-chip {
-  background: rgba(244,114,182,0.68);
-}
-
-.tab-card__label {
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  color: rgba(255,255,255,0.50);
+  flex-shrink: 0;
+  background: transparent;
+  color: rgba(255,255,255,0.55);
   transition: color 150ms ease-out;
 }
-.tab-card:hover:not(.tab-card--active) .tab-card__label {
-  color: rgba(255,255,255,0.75);
+.tab-card:hover:not(.tab-card--active) .tab-chip {
+  color: rgba(255,255,255,0.78);
 }
-.tab-card--active .tab-card__label { color: #ffffff; }
+.tab-card--active .tab-chip {
+  color: #2dd4bf; /* teal-400 — matches the active label */
+}
+
+.tab-card__text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+.tab-card__label {
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: rgba(255,255,255,0.92);
+  transition: color 150ms ease-out;
+}
+.tab-card--active .tab-card__label { color: #5eead4; /* teal-300 */ }
+
+.tab-card__sub {
+  font-size: 11.5px;
+  color: rgba(255,255,255,0.45);
+  margin-top: 1px;
+  line-height: 1.4;
+}
+
+.tab-card__chevron {
+  color: rgba(255,255,255,0.30);
+  flex-shrink: 0;
+  transition: color 150ms ease-out;
+}
+.tab-card:hover:not(.tab-card--active) .tab-card__chevron {
+  color: rgba(255,255,255,0.55);
+}
+.tab-card--active .tab-card__chevron {
+  color: rgba(45,212,191,0.6); /* teal-400 alpha — softer than the icon */
+}
 
 /* Icon tones — kept minimal so they match plain text-white/XX scale */
 .icon-quaternary { color: rgba(255,255,255,0.25); }
