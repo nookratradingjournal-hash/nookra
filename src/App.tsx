@@ -659,6 +659,21 @@ export default function App() {
     return () => window.removeEventListener('keydown', onKey)
   }, [widgetMenuOpen])
 
+  // ── Defensive panel reset on first mount of the journal ────────────────
+  // Guarantees the journal always opens on the main calendar/trades view —
+  // never with the Settings panel or Widgets drawer pre-opened. Was a
+  // reported bug after starting the trial: the Settings panel could be
+  // visible behind the post-activation transition. The store DEFAULTS
+  // these to closed, but this hook is a belt-and-suspenders reset for any
+  // stale-state path (HMR, legacy localStorage, future edge cases).
+  // Tutorial-driven panel opens still fire later via the scene controller
+  // useEffect below, so this doesn't fight onboarding.
+  useEffect(() => {
+    closeSettings()
+    setWidgetMenuOpen(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   // ── Tutorial scene controller ────────────────────────────────────────────
   // While the guided tour is running, specific steps need a panel to be open
   // so the spotlight has a visible element to highlight. We open the panel
