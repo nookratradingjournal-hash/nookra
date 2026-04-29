@@ -900,9 +900,22 @@ function LicenseSection() {
             </div>
           </div>
 
+          {/*
+            Hover styles use arbitrary values (e.g. hover:text-[#f87171])
+            instead of Tailwind utility names like hover:text-negative,
+            because `text-negative` / `border-negative` / `bg-negative-soft`
+            are custom CSS classes defined in src/index.css — NOT Tailwind
+            utilities. Tailwind's hover: prefix only chains onto its own
+            utilities, so the prior classes were silently no-op'ing,
+            which is why the button felt dead under the cursor.
+
+            Deactivate is a destructive action, so the hover state is
+            deliberately strong — clear red border + tinted background +
+            red text. No ambiguity.
+          */}
           <button
             onClick={handleDeactivate}
-            className="w-full py-2.5 rounded-lg text-[11px] font-medium border border-edge-resting bg-surface-resting text-quaternary hover:border-negative hover:text-negative hover:bg-negative-soft hover:shadow-[0_0_12px_rgba(248,113,113,0.06)] hover:scale-[1.02] cursor-pointer transition-[transform,background-color,border-color,color,opacity] duration-150 ease-out active:scale-[0.98]"
+            className="w-full py-2.5 rounded-lg text-[11px] font-medium border border-white/[0.10] bg-white/[0.02] text-white/55 cursor-pointer transition-all duration-150 ease-out hover:border-[rgba(248,113,113,0.55)] hover:bg-[rgba(248,113,113,0.10)] hover:text-[#f87171] hover:shadow-[0_0_0_1px_rgba(248,113,113,0.20),0_0_18px_rgba(248,113,113,0.10)] active:scale-[0.98]"
           >
             Deactivate This Device
           </button>
