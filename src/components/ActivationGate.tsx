@@ -227,13 +227,20 @@ export function ActivationGate({ children }: Props) {
       // Per-screen window height so no content is clipped. Each screen has
       // its own natural content height; the window matches it with a small
       // buffer. (CSS / layout untouched — only the IPC height value.)
-      //   • Name entry: 500 — icon badge + title + copy + input + button
-      //   • Welcome:    540 — certificate + name chip + 2-line message +
+      //   • Name entry: 520 — icon badge + title + copy + input + button
+      //   • Welcome:    560 — certificate + name chip + 2-line message +
       //                       device row + button
-      //   • Activation: 560 — title + 3 tab cards + tab content (license
-      //                       input OR trial/purchase copy + 3 bullets) +
-      //                       recovery link + CTA
-      let height = 580
+      //   • Activation: 700 — title + vertical 3-row method picker +
+      //                       tab content (license input OR purchase
+      //                       price+benefits) + recovery link + CTA.
+      //                       Was 580 when the picker was a 3-up
+      //                       horizontal grid; the new vertical
+      //                       Setup-Assistant-style list adds ~50px and
+      //                       the $20 price block adds ~70px, for a
+      //                       total ~120px more vertical content. 700
+      //                       gives a comfortable buffer on the
+      //                       tallest tab (Purchase).
+      let height = 700
       if (nameEntry !== null) height = 520
       else if (welcomeSession !== null) height = 560
       if (status !== 'loading') {
