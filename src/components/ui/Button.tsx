@@ -128,9 +128,12 @@ export function Button({
         'border',                     // keeps border width stable across variants
         BTN_TRANSITION,
         FOCUS_RING,
-        // Press scale — applied to every non-disabled variant uniformly so
-        // tactile feedback is consistent app-wide.
-        'active:scale-[0.98]',
+        // Press scale + counter-translate. Every variant lifts 2px on
+        // hover (`hover:-translate-y-[2px]` in the variant blocks below);
+        // `active:translate-y-0` cancels that lift on press so the button
+        // visibly sinks back down — clean rise-on-hover / push-on-click
+        // tactile feedback, consistent app-wide.
+        'active:scale-[0.98] active:translate-y-0',
         'disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none',
         'disabled:active:scale-100',   // no press on disabled
         SIZE_CLASSES[size],
@@ -148,20 +151,22 @@ export function Button({
           'hover:bg-[rgba(48,48,58,0.92)] hover:border-white/[0.22] hover:-translate-y-[2px] ' +
           'hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_6px_16px_-4px_rgba(0,0,0,0.55)]',
         variant === 'ghost' &&
-          // Visible fill + brighter text.
+          // Visible fill + brighter text + lift to match the others.
           'bg-transparent border-transparent text-secondary ' +
-          'hover:bg-white/[0.08] hover:text-primary',
+          'hover:bg-white/[0.08] hover:text-primary hover:-translate-y-[2px]',
         variant === 'outline' &&
           // Brighter edge + small lift + soft contact shadow + inset highlight.
           'bg-surface-resting border-[color:var(--edge-strong)] text-primary ' +
           'hover:border-white/[0.22] hover:bg-white/[0.05] hover:-translate-y-[2px] ' +
           'hover:shadow-[0_6px_16px_-4px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.08)]',
         variant === 'danger' &&
-          // Distinguishable destructive — red icon + red-tinted edge +
-          // faint red fill. No halo. Reads as different from neutral
-          // buttons without being loud.
+          // Distinguishable destructive — red text + red-tinted edge +
+          // faint red fill. Arbitrary-value Tailwind utilities (NOT the
+          // custom CSS classes `text-negative` / `bg-negative-soft-dim`,
+          // which silently no-op'd under the hover: prefix). Lift to
+          // match the other variants for consistency.
           'bg-transparent border-transparent text-tertiary ' +
-          'hover:text-negative hover:border-[rgba(239,68,68,0.28)] hover:bg-negative-soft-dim',
+          'hover:text-[#f87171] hover:border-[rgba(239,68,68,0.28)] hover:bg-[rgba(239,68,68,0.06)] hover:-translate-y-[2px]',
 
         className
       )}
@@ -214,28 +219,32 @@ export function IconButton({
         'inline-flex items-center justify-center rounded-xl select-none border',
         BTN_TRANSITION,
         FOCUS_RING,
-        'active:scale-[0.96]',
+        // 1px lift on icon-only buttons (subtler than 2px for full buttons —
+        // the smaller surface looks awkward with a 2px hop). Active
+        // counter-translates so press visibly sinks the lift.
+        'active:scale-[0.96] active:translate-y-0',
         'disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none',
         'disabled:active:scale-100',
         ICON_BUTTON_SIZE[size],
         variant === 'primary' &&
-          'hover:brightness-[1.12] active:brightness-[0.96]',
+          'hover:brightness-[1.12] hover:-translate-y-[1px] active:brightness-[0.96]',
         variant === 'secondary' &&
           'bg-surface-hover border-edge-strong text-primary ' +
-          'hover:bg-surface-active hover:border-white/[0.22] ' +
+          'hover:bg-surface-active hover:border-white/[0.22] hover:-translate-y-[1px] ' +
           'hover:shadow-[0_4px_10px_-2px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.10)]',
         variant === 'ghost' &&
           'bg-transparent border-transparent text-tertiary ' +
-          'hover:bg-white/[0.08] hover:text-primary',
+          'hover:bg-white/[0.08] hover:text-primary hover:-translate-y-[1px]',
         variant === 'outline' &&
           'bg-transparent border-edge-strong text-secondary ' +
-          'hover:border-white/[0.22] hover:bg-white/[0.05] ' +
+          'hover:border-white/[0.22] hover:bg-white/[0.05] hover:-translate-y-[1px] ' +
           'hover:shadow-[0_4px_10px_-2px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.10)]',
         variant === 'danger' &&
-          // Distinguishable destructive — red icon + red-tinted edge +
-          // faint red fill. No halo.
+          // Destructive — red icon + red-tinted edge + faint red fill.
+          // Arbitrary-value hovers (not the custom CSS classes) so the
+          // hover: prefix actually generates working CSS.
           'bg-transparent border-transparent text-tertiary ' +
-          'hover:text-negative hover:border-[rgba(239,68,68,0.28)] hover:bg-negative-soft-dim',
+          'hover:text-[#f87171] hover:border-[rgba(239,68,68,0.28)] hover:bg-[rgba(239,68,68,0.06)] hover:-translate-y-[1px]',
         className
       )}
     >

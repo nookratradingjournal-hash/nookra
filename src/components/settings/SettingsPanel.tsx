@@ -915,7 +915,7 @@ function LicenseSection() {
           */}
           <button
             onClick={handleDeactivate}
-            className="w-full py-2.5 rounded-lg text-[11px] font-medium border border-white/[0.10] bg-white/[0.02] text-white/55 cursor-pointer transition-all duration-150 ease-out hover:border-[rgba(248,113,113,0.55)] hover:bg-[rgba(248,113,113,0.10)] hover:text-[#f87171] hover:shadow-[0_0_0_1px_rgba(248,113,113,0.20),0_0_18px_rgba(248,113,113,0.10)] active:scale-[0.98]"
+            className="w-full py-2.5 rounded-lg text-[11px] font-medium border border-white/[0.10] bg-white/[0.02] text-white/55 cursor-pointer transition-all duration-150 ease-out hover:border-[rgba(248,113,113,0.55)] hover:bg-[rgba(248,113,113,0.10)] hover:text-[#f87171] hover:shadow-[0_0_0_1px_rgba(248,113,113,0.20),0_0_18px_rgba(248,113,113,0.10)] hover:-translate-y-[2px] active:scale-[0.98] active:translate-y-0"
           >
             Deactivate This Device
           </button>
