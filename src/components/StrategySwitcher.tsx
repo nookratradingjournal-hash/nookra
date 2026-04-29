@@ -143,7 +143,7 @@ export function StrategySwitcher({
         type="button"
         onClick={onAdd}
         title="New strategy"
-        className="shrink-0 w-6 h-6 rounded-md flex items-center justify-center text-white/30 hover:text-white/80 hover:bg-white/[0.04] transition-colors duration-150 cursor-pointer"
+        className="shrink-0 w-6 h-6 rounded-md flex items-center justify-center text-white/30 hover:text-white/80 hover:bg-white/[0.04] hover:-translate-y-[1px] active:translate-y-0 transition-all duration-150 ease-out cursor-pointer"
       >
         <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
           <path d="M4.5 1V8M1 4.5H8" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>

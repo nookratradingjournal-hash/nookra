@@ -59,7 +59,7 @@ function SpacerRow({
       <div className="h-px flex-1 bg-white/[0.06]" />
       <button
         onClick={onRemove}
-        className="close-hover opacity-0 group-hover:opacity-100 text-white/20 text-sm leading-none w-4 h-4 flex items-center justify-center ml-1 rounded"
+        className="close-hover opacity-0 group-hover:opacity-100 text-white/20 text-sm leading-none w-4 h-4 flex items-center justify-center ml-1 rounded hover:-translate-y-[1px] active:translate-y-0"
       >
         &times;
       </button>
@@ -133,7 +133,7 @@ function CheckRow({
 
       <button
         onClick={onRemove}
-        className="close-hover opacity-0 group-hover:opacity-100 text-white/20 text-base leading-none w-5 h-5 flex items-center justify-center rounded"
+        className="close-hover opacity-0 group-hover:opacity-100 text-white/20 text-base leading-none w-5 h-5 flex items-center justify-center rounded hover:-translate-y-[1px] active:translate-y-0"
       >
         &times;
       </button>

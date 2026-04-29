@@ -115,7 +115,7 @@ export function ScreenshotViewer({ screenshots, initialIdx, onClose }: Screensho
             type="button"
             title="Close (Esc)"
             onClick={close}
-            className="w-8 h-8 rounded-lg bg-white/[0.08] hover:bg-white/[0.16] flex items-center justify-center text-white/50 hover:text-white transition-all duration-150"
+            className="w-8 h-8 rounded-lg bg-white/[0.08] hover:bg-white/[0.16] flex items-center justify-center text-white/50 hover:text-white hover:-translate-y-[2px] active:translate-y-0 transition-all duration-150"
           >
             <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
               <path d="M1 1L10 10M10 1L1 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>

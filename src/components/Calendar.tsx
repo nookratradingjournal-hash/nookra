@@ -81,7 +81,7 @@ export function Calendar({ trades, selectedDate, onSelectDate, month, year, onPr
         <div className="flex gap-0.5">
           <button
             onClick={onPrevMonth}
-            className="float-hover w-7 h-7 flex items-center justify-center rounded-md text-white/25 hover:text-white hover:bg-white/[0.10] hover:border-white/[0.14] border border-transparent"
+            className="float-hover w-7 h-7 flex items-center justify-center rounded-md text-white/25 hover:text-white hover:bg-white/[0.10] hover:border-white/[0.14] hover:-translate-y-[2px] active:translate-y-0 border border-transparent"
           >
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M9 11L5 7L9 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -89,7 +89,7 @@ export function Calendar({ trades, selectedDate, onSelectDate, month, year, onPr
           </button>
           <button
             onClick={onNextMonth}
-            className="float-hover w-7 h-7 flex items-center justify-center rounded-md text-white/25 hover:text-white hover:bg-white/[0.10] hover:border-white/[0.14] border border-transparent"
+            className="float-hover w-7 h-7 flex items-center justify-center rounded-md text-white/25 hover:text-white hover:bg-white/[0.10] hover:border-white/[0.14] hover:-translate-y-[2px] active:translate-y-0 border border-transparent"
           >
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M5 3L9 7L5 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>

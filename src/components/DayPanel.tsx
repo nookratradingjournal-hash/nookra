@@ -219,7 +219,7 @@ function TradeRow({
         <button
           onClick={onRemove}
           title="Delete trade"
-          className="close-hover mt-1 opacity-0 group-hover/row:opacity-100 transition-opacity duration-150 text-white/20 p-0.5 rounded"
+          className="close-hover mt-1 opacity-0 group-hover/row:opacity-100 transition-opacity duration-150 text-white/20 p-0.5 rounded hover:-translate-y-[1px] active:translate-y-0"
         >
           <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
             <path
@@ -337,7 +337,7 @@ export function DayPanel({
             <button
               onClick={onClose}
               aria-label="Close"
-              className="close-hover ml-1 w-7 h-7 rounded-md flex items-center justify-center text-white/25"
+              className="close-hover ml-1 w-7 h-7 rounded-md flex items-center justify-center text-white/25 transition-all duration-150 ease-out hover:-translate-y-[1px] active:translate-y-0"
             >
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                 <path

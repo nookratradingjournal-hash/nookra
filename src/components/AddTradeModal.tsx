@@ -756,7 +756,7 @@ export function AddTradeModal({
                       type="button"
                       disabled={uploading}
                       onClick={triggerFileInput}
-                      className="group/empty w-full flex flex-row items-center gap-3 px-4 cursor-pointer hover:bg-white/[0.03] transition-colors duration-150 disabled:opacity-50"
+                      className="group/empty w-full flex flex-row items-center gap-3 px-4 cursor-pointer hover:bg-white/[0.03] hover:-translate-y-[2px] active:translate-y-0 transition-all duration-150 ease-out disabled:opacity-50"
                       style={{ height: 72 }}
                     >
                       <svg width="18" height="16" viewBox="0 0 28 24" fill="none" className="shrink-0 text-white/20 group-hover/empty:text-white/35 transition-colors duration-150">
@@ -835,7 +835,7 @@ export function AddTradeModal({
                         type="button"
                         disabled={uploading}
                         onClick={triggerFileInput}
-                        className="group/add w-full flex flex-row items-center gap-2.5 px-4 cursor-pointer hover:bg-white/[0.03] transition-colors duration-150 disabled:opacity-40 disabled:cursor-default"
+                        className="group/add w-full flex flex-row items-center gap-2.5 px-4 cursor-pointer hover:bg-white/[0.03] hover:-translate-y-[2px] active:translate-y-0 transition-all duration-150 ease-out disabled:opacity-40 disabled:cursor-default"
                         style={{ height: 40 }}
                       >
                         <svg width="11" height="11" viewBox="0 0 11 11" fill="none" className="shrink-0 text-white/20 group-hover/add:text-white/40 transition-colors duration-150">

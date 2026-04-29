@@ -136,17 +136,17 @@ function DangerBtn({ children, onClick, confirm: confirmLabel }: { children: Rea
   if (pending) {
     return (
       <div className="flex gap-2">
-        <button onClick={() => { onClick(); setPending(false) }} className="btn-press flex-1 py-2 rounded-lg text-xs font-medium border border-red-500/30 bg-red-500/10 text-red-400 hover:bg-red-500/20 cursor-pointer">
+        <button onClick={() => { onClick(); setPending(false) }} className="btn-press flex-1 py-2 rounded-lg text-xs font-medium border border-red-500/30 bg-red-500/10 text-red-400 hover:bg-red-500/20 hover:-translate-y-[2px] active:translate-y-0 transition-all duration-150 ease-out cursor-pointer">
           {confirmLabel ?? 'Yes, confirm'}
         </button>
-        <button onClick={() => setPending(false)} className="btn-press px-3 py-2 rounded-lg text-xs font-medium border border-white/[0.07] text-white/30 hover:text-white/60 hover:border-white/15 cursor-pointer">
+        <button onClick={() => setPending(false)} className="btn-press px-3 py-2 rounded-lg text-xs font-medium border border-white/[0.07] text-white/30 hover:text-white/60 hover:border-white/15 hover:-translate-y-[2px] active:translate-y-0 transition-all duration-150 ease-out cursor-pointer">
           Cancel
         </button>
       </div>
     )
   }
   return (
-    <button onClick={() => setPending(true)} className="btn-press w-full py-2 rounded-lg text-xs font-medium border border-white/[0.07] text-white/30 hover:border-red-500/30 hover:text-red-400 hover:bg-red-500/[0.04] cursor-pointer">
+    <button onClick={() => setPending(true)} className="btn-press w-full py-2 rounded-lg text-xs font-medium border border-white/[0.07] text-white/30 hover:border-red-500/30 hover:text-red-400 hover:bg-red-500/[0.04] hover:-translate-y-[2px] active:translate-y-0 transition-all duration-150 ease-out cursor-pointer">
       {children}
     </button>
   )
@@ -199,7 +199,7 @@ function AppearanceSection({ onReplayTutorial }: { onReplayTutorial: () => void 
         <SLabel>Guided Tour</SLabel>
         <button
           onClick={onReplayTutorial}
-          className="btn-press w-full flex items-center justify-between p-2.5 rounded-lg border border-white/[0.07] bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.04] transition-[transform,background-color,border-color,color,opacity] duration-150 ease-out cursor-pointer text-left"
+          className="btn-press w-full flex items-center justify-between p-2.5 rounded-lg border border-white/[0.07] bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.04] hover:-translate-y-[2px] active:translate-y-0 transition-[transform,background-color,border-color,color,opacity] duration-150 ease-out cursor-pointer text-left"
         >
           <div className="flex flex-col gap-0.5">
             <span className="text-xs font-medium text-white/70">Replay Tutorial</span>
@@ -283,7 +283,7 @@ function TradingSection() {
             />
           </div>
         ) : (
-          <button onClick={() => setEditing(true)} className="flex items-center gap-2 group w-full p-2.5 rounded-lg border border-white/[0.07] bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.04] transition-all duration-150 cursor-pointer text-left">
+          <button onClick={() => setEditing(true)} className="flex items-center gap-2 group w-full p-2.5 rounded-lg border border-white/[0.07] bg-white/[0.02] hover:border-white/15 hover:bg-white/[0.04] hover:-translate-y-[2px] active:translate-y-0 transition-all duration-150 cursor-pointer text-left">
             <span className="text-xs text-white/30">{sym}</span>
             <span className="text-sm font-semibold text-white/60 tabular-nums flex-1">
               {startingBalance.toLocaleString('en-US', { minimumFractionDigits: 0 })}
@@ -376,14 +376,14 @@ function FocusSection() {
             <button
               onClick={handleConfirm}
               disabled={!canConfirm}
-              className="btn-press px-3 py-1.5 rounded-lg text-xs font-medium border disabled:opacity-30 disabled:cursor-not-allowed disabled:pointer-events-none cursor-pointer border-white/[0.07] bg-white/[0.02] text-white/40 hover:border-white/15 hover:text-white/70 hover:bg-white/[0.04]"
+              className="btn-press px-3 py-1.5 rounded-lg text-xs font-medium border disabled:opacity-30 disabled:cursor-not-allowed disabled:pointer-events-none cursor-pointer border-white/[0.07] bg-white/[0.02] text-white/40 hover:border-white/15 hover:text-white/70 hover:bg-white/[0.04] hover:-translate-y-[2px] active:translate-y-0 transition-all duration-150 ease-out"
             >
               Confirm
             </button>
             {isDirty && (
               <button
                 onClick={handleCancel}
-                className="btn-press px-3 py-1.5 rounded-lg text-xs font-medium border border-white/[0.07] text-white/25 hover:text-white/60 hover:border-white/15 cursor-pointer"
+                className="btn-press px-3 py-1.5 rounded-lg text-xs font-medium border border-white/[0.07] text-white/25 hover:text-white/60 hover:border-white/15 hover:-translate-y-[2px] active:translate-y-0 transition-all duration-150 ease-out cursor-pointer"
               >
                 Cancel
               </button>
@@ -674,7 +674,7 @@ function LicenseCard({
       {/* Row 2: Deactivate button on its own line */}
       <button
         onClick={onDeactivate}
-        className="self-start px-4 py-2 rounded-xl border border-edge-resting text-[12px] font-medium text-tertiary hover:text-negative hover:border-white/[0.14] hover:bg-white/[0.03] hover:-translate-y-[1px] hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.05)] transition-[transform,background-color,border-color,color,opacity,box-shadow] duration-150 ease-out cursor-pointer"
+        className="self-start px-4 py-2 rounded-xl border border-edge-resting text-[12px] font-medium text-tertiary hover:text-[#f87171] hover:border-white/[0.14] hover:bg-white/[0.03] hover:-translate-y-[1px] hover:shadow-[0_4px_12px_-4px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.05)] transition-[transform,background-color,border-color,color,opacity,box-shadow] duration-150 ease-out cursor-pointer"
       >
         Deactivate
       </button>
@@ -758,7 +758,7 @@ function DeviceRow({
       {onRemove && (
         <button
           onClick={onRemove}
-          className="w-7 h-7 rounded-full border border-edge-resting flex items-center justify-center text-ghost hover:text-negative hover:border-[rgba(239,68,68,0.32)] hover:bg-negative-soft-dim hover:scale-[1.06] transition-[transform,background-color,border-color,color,opacity] duration-150 ease-out cursor-pointer shrink-0"
+          className="w-7 h-7 rounded-full border border-edge-resting flex items-center justify-center text-ghost hover:text-[#f87171] hover:border-[rgba(239,68,68,0.32)] hover:bg-[rgba(239,68,68,0.06)] hover:scale-[1.06] hover:-translate-y-[1px] active:translate-y-0 transition-[transform,background-color,border-color,color,opacity] duration-150 ease-out cursor-pointer shrink-0"
         >
           <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
             <path d="M3 3l6 6M9 3l-6 6" />
@@ -1062,7 +1062,7 @@ function AboutSection() {
           <button
             onClick={handleCheck}
             disabled={updateStatus === 'checking'}
-            className="btn-press px-3.5 py-2 rounded-lg text-[11px] font-medium border border-white/[0.08] bg-white/[0.02] text-white/40 hover:border-white/15 hover:text-white/60 hover:bg-white/[0.04] cursor-pointer transition-colors duration-150 disabled:opacity-40 disabled:cursor-default"
+            className="btn-press px-3.5 py-2 rounded-lg text-[11px] font-medium border border-white/[0.08] bg-white/[0.02] text-white/40 hover:border-white/15 hover:text-white/60 hover:bg-white/[0.04] hover:-translate-y-[2px] active:translate-y-0 cursor-pointer transition-all duration-150 ease-out disabled:opacity-40 disabled:cursor-default"
           >
             {updateStatus === 'checking' ? 'Checking\u2026' : 'Check for Updates'}
           </button>
@@ -1082,7 +1082,7 @@ function AboutSection() {
           <button
             onClick={handleDownload}
             style={{ backgroundColor: 'var(--accent)', borderColor: 'var(--accent-border)' }}
-            className="btn-press w-full py-2.5 rounded-lg text-xs font-semibold text-white border cursor-pointer transition-all duration-150"
+            className="btn-press w-full py-2.5 rounded-lg text-xs font-semibold text-white border cursor-pointer hover:-translate-y-[2px] active:translate-y-0 transition-all duration-150"
           >
             Update Now
           </button>

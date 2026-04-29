@@ -84,7 +84,7 @@ export function TagSelect({ options, value, onChange, onAddOption, onRemoveOptio
         <button
           type="button"
           onClick={startAdding}
-          className="px-2.5 py-1 rounded-full text-xs border border-dashed border-white/[0.07] text-white/20 hover:border-white/15 hover:text-white/40 hover:bg-white/[0.04] transition-all duration-150 cursor-pointer"
+          className="px-2.5 py-1 rounded-full text-xs border border-dashed border-white/[0.07] text-white/20 hover:border-white/15 hover:text-white/40 hover:bg-white/[0.04] hover:-translate-y-[2px] active:translate-y-0 transition-all duration-150 cursor-pointer"
         >
           + custom
         </button>

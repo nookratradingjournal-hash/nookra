@@ -189,14 +189,14 @@ export function AdminPanel({ onClose }: { onClose: () => void }) {
             <button
               onClick={onClose}
               disabled={loading}
-              className="flex-1 py-2 rounded-lg text-[11px] font-medium text-white/30 border border-white/[0.06] cursor-pointer hover:text-white/50 transition-colors disabled:opacity-30"
+              className="flex-1 py-2 rounded-lg text-[11px] font-medium text-white/30 border border-white/[0.06] cursor-pointer hover:text-white/50 hover:-translate-y-[2px] active:translate-y-0 transition-all duration-150 ease-out disabled:opacity-30"
             >
               Back
             </button>
             <button
               onClick={signIn}
               disabled={loading}
-              className="flex-1 py-2 rounded-lg text-[11px] font-semibold text-white border border-white/[0.08] cursor-pointer hover:bg-white/[0.04] transition-colors disabled:opacity-30"
+              className="flex-1 py-2 rounded-lg text-[11px] font-semibold text-white border border-white/[0.08] cursor-pointer hover:bg-white/[0.04] hover:-translate-y-[2px] active:translate-y-0 transition-all duration-150 ease-out disabled:opacity-30"
               style={{ backgroundColor: 'var(--accent)' }}
             >
               {loading ? 'Signing in…' : 'Sign In'}
@@ -327,7 +327,7 @@ function DashboardSection() {
         <button
           onClick={load}
           disabled={reloading}
-          className="px-3 py-1.5 rounded-lg text-[11px] font-medium cursor-pointer transition-all text-white/30 hover:text-white/50 hover:bg-white/[0.03] disabled:opacity-30 disabled:cursor-default"
+          className="px-3 py-1.5 rounded-lg text-[11px] font-medium cursor-pointer transition-all text-white/30 hover:text-white/50 hover:bg-white/[0.03] hover:-translate-y-[2px] active:translate-y-0 disabled:opacity-30 disabled:cursor-default"
         >
           {reloading ? 'Reloading\u2026' : 'Reload'}
         </button>
@@ -647,7 +647,7 @@ function LicensesSection() {
                         className={`px-2.5 py-1 rounded-md text-[10px] font-medium border cursor-pointer transition-all ${
                           confirmingDeleteKey === l.license_key
                             ? 'bg-negative-strong text-negative border-negative'
-                            : 'text-negative hover:text-negative border-negative hover:border-negative hover:bg-negative-soft-dim'
+                            : 'text-negative hover:text-[#f87171] border-negative hover:border-[rgba(239,68,68,0.30)] hover:bg-[rgba(239,68,68,0.06)]'
                         }`}
                       >
                         {confirmingDeleteKey === l.license_key ? 'Confirm?' : 'Delete'}
@@ -731,7 +731,7 @@ function LicensesSection() {
                 disabled={bulkBusy}
                 className={`px-3 py-1.5 rounded-lg text-[11px] font-semibold border cursor-pointer transition-all disabled:opacity-30 ${
                   bulkConfirm.action === 'delete'
-                    ? 'bg-negative-strong text-negative border-negative hover:bg-negative-strong'
+                    ? 'bg-negative-strong text-negative border-negative hover:bg-[rgba(239,68,68,0.22)]'
                     : 'bg-surface-hover text-secondary border-edge-resting hover:bg-surface-active'
                 }`}
               >
@@ -765,7 +765,7 @@ function LicenseDetailModal({
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="close-hover w-8 h-8 rounded-xl flex items-center justify-center text-white/35"
+            className="close-hover w-8 h-8 rounded-xl flex items-center justify-center text-white/35 hover:-translate-y-[1px] active:translate-y-0"
           >
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true" className="pointer-events-none">
               <path d="M1 1L9 9M9 1L1 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -1456,14 +1456,14 @@ function UpdatesSection() {
             <button
               onClick={handleSave}
               disabled={saving}
-              className="flex-1 py-2.5 rounded-lg text-[12px] font-medium text-white/60 border border-white/[0.08] cursor-pointer transition-[background-color,border-color,color,opacity] duration-150 ease-out hover:bg-white/[0.04] disabled:opacity-30"
+              className="flex-1 py-2.5 rounded-lg text-[12px] font-medium text-white/60 border border-white/[0.08] cursor-pointer transition-all duration-150 ease-out hover:bg-white/[0.04] hover:-translate-y-[2px] active:translate-y-0 disabled:opacity-30"
             >
               {saving ? 'Saving\u2026' : 'Save as Draft'}
             </button>
             <button
               onClick={handleSaveAndPublish}
               disabled={saving}
-              className="flex-1 py-2.5 rounded-lg text-[12px] font-semibold text-white border border-white/[0.08] cursor-pointer transition-[filter,transform,opacity] duration-150 ease-out hover:brightness-[1.06] active:scale-[0.98] disabled:opacity-30"
+              className="flex-1 py-2.5 rounded-lg text-[12px] font-semibold text-white border border-white/[0.08] cursor-pointer transition-[filter,transform,opacity] duration-150 ease-out hover:brightness-[1.06] hover:-translate-y-[2px] active:translate-y-0 active:scale-[0.98] disabled:opacity-30"
               style={{ backgroundColor: 'var(--accent)' }}
             >
               {saving ? 'Publishing\u2026' : 'Save & Publish'}
@@ -1483,7 +1483,7 @@ function UpdatesSection() {
           {actionMsg && <span className="text-[11px] text-positive">{actionMsg}</span>}
           <button
             onClick={openCreate}
-            className="px-3 py-1.5 rounded-lg text-[11px] font-semibold text-white border border-white/[0.08] cursor-pointer transition-all hover:bg-white/[0.04]"
+            className="px-3 py-1.5 rounded-lg text-[11px] font-semibold text-white border border-white/[0.08] cursor-pointer transition-all hover:bg-white/[0.04] hover:-translate-y-[2px] active:translate-y-0"
             style={{ backgroundColor: 'var(--accent)' }}
           >
             + New Update
@@ -1571,7 +1571,7 @@ function UpdatesSection() {
               </button>
               <button
                 onClick={() => handleDelete(deleteConfirm)}
-                className="px-3 py-1.5 rounded-lg text-[11px] font-semibold border cursor-pointer transition-all bg-negative-strong text-negative border-negative hover:bg-negative-strong"
+                className="px-3 py-1.5 rounded-lg text-[11px] font-semibold border cursor-pointer transition-all bg-negative-strong text-negative border-negative hover:bg-[rgba(239,68,68,0.22)]"
               >
                 Delete
               </button>
@@ -1672,13 +1672,13 @@ function KeyGenSection() {
             />
             <button
               onClick={handleCopy}
-              className="px-3 py-2 rounded-lg text-[11px] font-medium border border-white/[0.08] text-white/40 hover:text-white/70 cursor-pointer transition-colors"
+              className="px-3 py-2 rounded-lg text-[11px] font-medium border border-white/[0.08] text-white/40 hover:text-white/70 hover:-translate-y-[2px] active:translate-y-0 cursor-pointer transition-all duration-150 ease-out"
             >
               {copied ? 'Copied!' : 'Copy'}
             </button>
             <button
               onClick={handleGenerate}
-              className="px-3 py-2 rounded-lg text-[11px] font-medium border border-white/[0.08] text-white/40 hover:text-white/70 cursor-pointer transition-colors"
+              className="px-3 py-2 rounded-lg text-[11px] font-medium border border-white/[0.08] text-white/40 hover:text-white/70 hover:-translate-y-[2px] active:translate-y-0 cursor-pointer transition-all duration-150 ease-out"
             >
               New
             </button>
@@ -1735,7 +1735,7 @@ function KeyGenSection() {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="w-full py-2.5 rounded-lg text-[12px] font-semibold text-white border border-white/[0.08] cursor-pointer transition-all disabled:opacity-30"
+          className="w-full py-2.5 rounded-lg text-[12px] font-semibold text-white border border-white/[0.08] cursor-pointer transition-all hover:-translate-y-[2px] active:translate-y-0 disabled:opacity-30"
           style={{ backgroundColor: 'var(--accent)' }}
         >
           {saving ? 'Saving\u2026' : 'Create License'}
@@ -1766,7 +1766,7 @@ function ActionBtn({
 }) {
   const c =
     color === 'red'
-      ? 'text-negative hover:text-negative border-negative hover:border-negative hover:bg-negative-soft'
+      ? 'text-negative hover:text-[#f87171] border-negative hover:border-[rgba(239,68,68,0.30)] hover:bg-[rgba(239,68,68,0.12)]'
       : color === 'amber'
         ? 'text-warning hover:text-warning border-warning hover:border-warning hover:bg-warning-soft'
         : color === 'blue'
@@ -1775,7 +1775,7 @@ function ActionBtn({
   return (
     <button
       onClick={onClick}
-      className={`px-2.5 py-1 rounded-md text-[10px] font-medium border cursor-pointer transition-all ${c}`}
+      className={`px-2.5 py-1 rounded-md text-[10px] font-medium border cursor-pointer transition-all hover:-translate-y-[2px] active:translate-y-0 ${c}`}
     >
       {label}
     </button>
